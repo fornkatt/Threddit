@@ -1,0 +1,112 @@
+@use "../../Shared/design"
+
+.post-image, .comment-image-preview
+  border-radius: 15px
+  max-width: 100%
+
+.post-details-title
+  white-space: pre-wrap
+  word-wrap: break-word
+  overflow-wrap: anywhere
+
+.edit-box-container
+  margin-bottom: 2rem
+
+::deep .posted-by-username
+  margin-bottom: auto
+  margin-top: auto
+  @include design.username-link
+
+::deep .edit-text-area, ::deep .report-text-area
+  @include design.text-area-box
+
+.edit-button, .cancel-edit-button
+  @include design.edit-button
+
+.confirm-edit-button, .cancel-delete-button, .confirm-report-button
+  @include design.comment-button
+
+.confirm-delete-button, .delete-button, .cancel-report-button
+  @include design.delete-button
+
+.posted-by-username
+  @include design.post-comment-author
+
+.posted-at
+  @include design.post-comment-date
+
+.report-category-selector
+  @include design.category-selector
+
+::deep .back-button
+  margin: auto 1rem auto auto
+  @include design.back-button
+  
+.report-button
+  @include design.base-button
+
+.post-details
+  margin-bottom: 2rem
+
+.post-details-content
+  white-space: pre-wrap
+  word-wrap: break-word
+  overflow-wrap: anywhere
+
+.post-details-top-row
+  display: flex
+  gap: 1rem
+  flex-direction: row
+
+.comment-box-container
+  margin-top: 3rem
+
+.comment-section-container
+  margin-top: 3rem
+
+.post-details-bottom-row
+  display: flex
+  gap: 1rem
+  flex-direction: row
+
+  span
+    @include design.comment-post-score-count
+
+.post-score-container
+  align-content: center
+  align-items: center
+
+.comment-reply-count-container
+  align-content: center
+  align-items: center
+
+  span
+    margin-top: auto
+    margin-bottom: auto
+
+.vote-button
+  @include design.vote-button
+
+::deep .comment-text-area
+  @include design.text-area-box
+  
+.comment-box-submit-button
+  @include design.comment-button
+  margin-top: 1rem
+
+.post-actions-container
+  display: flex
+  gap: 1rem
+  flex-direction: row
+  
+.image-selector-container
+  margin-top: 1rem
+  display: flex
+  flex-direction: row
+  gap: 1rem
+  
+  label
+    margin-bottom: 1rem
+
+.error
+  @include design.error-text

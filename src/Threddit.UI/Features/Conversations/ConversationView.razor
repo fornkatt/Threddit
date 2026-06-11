@@ -1,0 +1,110 @@
+@page "/conversations/{conversationId:guid}"
+@page "/conversations/group/{conversationId:guid}"
+@page "/conversations/new"
+@using Threddit.UI.Features.Shared
+
+<PageTitle>Conversation - Threddit</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="conversation-view">
+            <div class="conversation-view-header">
+                <button class="back-button" @onclick="NavigateBack">Back</button>
+                @if (_isPendingConversation)
+                {
+                    <span>New conversation with @PendingUsername</span>
+                }
+                @if (_isGroup)
+                {
+                    <div class="group-info-container">
+                        <div>
+                            <span>Group conversation: <strong>@_groupName</strong></span>
+                            <button class="add-member-button" @onclick="() => _showAddMember = !_showAddMember">
+                                Add member
+                            </button>
+                        </div>
+                        @if (_showAddMember)
+                        {
+                            <div class="add-member-form">
+                                <input type="text" @bind="_addMemberUsername" placeholder="New member username"/>
+                                <button class="confirm-add-member-button" @onclick="AddMemberAsync" disabled="@_isBusy">
+                                    Add
+                                </button>
+                                @if (_addMemberErrorMessage is not null)
+                                {
+                                    <p class="error">@_addMemberErrorMessage</p>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="messages-list">
+                @if (_isLoading)
+                {
+                    <p>Loading messages...</p>
+                }
+                @foreach (var message in _messages)
+                {
+                    <div class="message-item">
+                        @if (message is { IsReply: true, ParentMessageContent: not null })
+                        {
+                            <div class="message-reply-text">
+                                ↩ <strong>@message.ParentMessageSenderUsername</strong>: @message.ParentMessageContent
+                            </div>
+                        }
+                        <div class="message-container">
+                            <div class="sender-info">
+                                <UserAvatarComponent ProfilePictureUrl="@message.SenderProfilePicture"
+                                                     Username="@message.SenderUsername"/>
+                                <strong>@(message.SenderUsername ?? "[deleted]")</strong>
+                                <span class="message-time">
+                                    @message.SentAt.ToLocalTime().ToString("yyyy MMMM dd HH:mm")
+                                </span>
+                            </div>
+                            <div class="message-content">
+                                @(message.IsDeleted ? "[deleted]" : message.Content)
+                            </div>
+                            <div class="reply-button-container">
+                                @if (!message.IsDeleted)
+                                {
+                                    <button class="reply-button" @onclick="() => SetReply(message)">Reply</button>
+                                }
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                }
+            </div>
+
+            @if (_replyTo is not null)
+            {
+                <div class="reply-preview">
+                    <div class="reply-preview-header">
+                        <button class="cancel-reply-button" @onclick="() => _replyTo = null">X</button>
+                        <span>Replying to <strong>@_replyTo.SenderUsername</strong>:</span>
+                    </div>
+                    <p class="reply-preview-content">@_replyTo.Content</p>
+                </div>
+            }
+
+            <div class="message-input-area">
+                <InputTextArea class="message-text-input" @bind-Value="_messageContent" @bind:event="oninput"
+                               placeholder="Message..." maxlength="3000"
+                               @onkeydown="OnKeyDown"/>
+                <button class="confirm-send-button"
+                        @onclick="SendAsync" disabled="@(_isBusy || string.IsNullOrWhiteSpace(_messageContent))">
+                    Send
+                </button>
+                @if (_sendErrorMessage is not null)
+                {
+                    <p class="error">@_sendErrorMessage</p>
+                }
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to view this conversation.</p>
+    </NotAuthorized>
+</AuthorizeView>

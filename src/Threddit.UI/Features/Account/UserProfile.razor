@@ -1,0 +1,104 @@
+@page "/u/{Username}"
+@using Threddit.UI.Features.Shared
+
+<PageTitle>@Username - Threddit</PageTitle>
+
+<div class="user-profile-page">
+    @if (_isLoading)
+    {
+        <p>Loading user profile...</p>
+    }
+    else if (_errorMessage is not null)
+    {
+        <p class="error">@_errorMessage</p>
+    }
+    else if (_profile is not null)
+    {
+        <div class="user-profile-container">
+            <div class="user-profile-header">
+                <div class="user-profile-info">
+                    <div class="user-profile-base-info">
+                        <UserAvatarComponent ProfilePictureUrl="@_profile.ProfilePicture"
+                                             Username="@_profile.Username"
+                                             CssClass="user-avatar--large"/>
+                        <span class="user-profile-username">@_profile.Username</span>
+                        <span class="user-profile-joined">
+                        Joined @_profile.CreationDate.ToLocalTime().ToString("yyyy MMMM dd")
+                        </span>
+                    </div>
+                    <AuthorizeView>
+                        <Authorized>
+                            @if (CurrentUserStore.Username != Username)
+                            {
+                                <button class="message-button" @onclick="InitiateConversation">Message</button>
+                            }
+                        </Authorized>
+                    </AuthorizeView>
+                    <div class="user-profile-score">
+                        <span>Post score: @_profile.PostScore.ToString()</span>
+                        <span>Comment score: @_profile.CommentScore.ToString()</span>
+                        <span>Total score: @_profile.TotalScore.ToString()</span>
+                    </div>
+                </div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(_profile.Description))
+            {
+                <div class="user-profile-about">
+                    <h3>About</h3>
+                    <p>@_profile.Description</p>
+                </div>
+            }
+            <AuthorizeView>
+                <Authorized>
+                    @if (CurrentUserStore.Username == Username)
+                    {
+                        <div class="user-profile-edit">
+                            @if (!_isEditing)
+                            {
+                                <button class="edit-profile-button" @onclick="StartEdit">Edit profile</button>
+                            }
+                            else
+                            {
+                                <div class="edit-profile-form">
+                                    <label>Current profile picture</label>
+                                    @if (_imagePreviewUrl is not null || !string.IsNullOrWhiteSpace(_editProfilePicture))
+                                    {
+                                        <img src="@(_imagePreviewUrl ?? _editProfilePicture)"
+                                             class="profile-picture-preview"
+                                             alt="Profile picture preview"/>
+                                    }
+                                    <InputFile OnChange="OnProfilePictureSelectedAsync" accept="image/*"
+                                               disabled="@_isUploadBusy"/>
+                                    @if (_isUploadBusy)
+                                    {
+                                        <span>Uploading...</span>
+                                    }
+                                    @if (_uploadErrorMessage is not null)
+                                    {
+                                        <p class="error">@_uploadErrorMessage</p>
+                                    }
+                                    <InputTextArea class="edit-text-area" @bind-Value="_editDescription" maxlength="500"
+                                                   placeholder="Say something about yourself..."/>
+                                    <div class="edit-actions">
+                                        <button class="edit-save-button" @onclick="SaveEditAsync"
+                                                disabled="@_isEditBusy">
+                                            Save
+                                        </button>
+                                        <button class="edit-cancel-button" @onclick="CancelEdit"
+                                                disabled="@_isEditBusy">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    @if (_editErrorMessage is not null)
+                                    {
+                                        <p class="error">@_editErrorMessage</p>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </Authorized>
+            </AuthorizeView>
+        </div>
+    }
+</div>

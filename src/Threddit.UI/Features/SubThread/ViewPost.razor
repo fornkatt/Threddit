@@ -1,0 +1,222 @@
+@using Threddit.UI.Features.Shared
+
+@page "/t/{SubThreadName}/posts/{PostId:guid}/{PostSlug}"
+
+<PageTitle>@(_post?.Title ?? "Post") - t/@SubThreadName</PageTitle>
+
+@if (_isLoading)
+{
+    <p>Loading post...</p>
+}
+else if (_errorMessage is not null)
+{
+    <p class="error">@_errorMessage</p>
+}
+else if (_post is not null)
+{
+    <div class="post-view-container">
+        <div class="post-details">
+            <div class="post-details-top-row">
+                <UserAvatarComponent ProfilePictureUrl="@_post.PostedByProfilePicture"
+                                     Username="@_post.PostedByUsername"
+                                     OnClick="@(() => NavigateToUserProfile(_post.PostedByUsername))"/>
+                <NavLink href="@($"/u/{_post.PostedByUsername}")" class="posted-by-username">
+                    @(_post.PostedByUsername ?? "[deleted]")
+                </NavLink>
+                <span class="posted-at">@_post.PostedAt.ToLocalTime().ToString("yyyy MMMM dd HH:mm")</span>
+                <button class="back-button" @onclick="NavigateToSubThread">Back</button>
+            </div>
+            <h1 class="post-details-title">@_post.Title</h1>
+
+            @if (_post.ImageUrl is not null)
+            {
+                <div class="post-image-container">
+                    <img src="@_post.ImageUrl" class="post-image" alt="Post image"/>
+                </div>
+            }
+            @if (_isEditPending)
+            {
+                <div class="edit-box-container">
+                    <InputTextArea class="edit-text-area" @bind-Value="_editContent"/>
+                    <div class="edit-actions">
+                        <button class="confirm-edit-button" @onclick="ConfirmEditAsync" disabled="@_isEditBusy">
+                            Save
+                        </button>
+                        <button class="cancel-edit-button" @onclick="CancelEdit" disabled="@_isEditBusy">
+                            Cancel
+                        </button>
+                    </div>
+                    @if (_editErrorMessage is not null)
+                    {
+                        <p class="error">@_editErrorMessage</p>
+                    }
+                </div>
+            }
+            else if (_post.Content is not null)
+            {
+                <p class="post-details-content">@_post.Content</p>
+            }
+            <div class="post-details-bottom-row">
+                <div class="post-score-container">
+                    <AuthorizeView>
+                        <Authorized>
+                            <button class="post-upvote vote-button" @onclick="() => VotePostAsync(true)"
+                                    disabled="@_isVoteBusy">▲
+                            </button>
+                            <span class="post-score">@_post.Score.ToString()</span>
+                            <button class="post-downvote vote-button" @onclick="() => VotePostAsync(false)"
+                                    disabled="@_isVoteBusy">▼
+                            </button>
+                        </Authorized>
+                        <NotAuthorized>
+                            <span class="post-upvote">▲</span>
+                            <span class="post-score">@_post.Score.ToString()</span>
+                            <span class="post-downvote">▼</span>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </div>
+                <div class="comment-reply-count-container">
+                    <span class="post-comment-count">💬 @_post.CommentCount.ToString()</span>
+                </div>
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="post-actions-container">
+                            @if (CanEdit && !_isEditPending)
+                            {
+                                <button class="edit-button" @onclick="RequestEdit">
+                                    Edit
+                                </button>
+                            }
+                            @if (!_isReportPending && !_isReportSuccess)
+                            {
+                                <button class="report-button" @onclick="RequestReport">
+                                    Report
+                                </button>
+                            }
+                            @if ((IsAuthorDelete || IsModeratorDelete) && !_isDeletePending)
+                            {
+                                <button class="delete-button" @onclick="RequestDelete">
+                                    Delete
+                                </button>
+                            }
+                            @if (_isReportSuccess)
+                            {
+                                <span class="report-success">Report submitted.</span>
+                            }
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+            @if (_isDeletePending)
+            {
+                <div class="delete-confirm-container">
+                    @if (IsAuthorDelete)
+                    {
+                        <p>Are you sure you want to delete this post?</p>
+                    }
+                    else if (IsModeratorDelete)
+                    {
+                        <p>Provide a reason for deleting this post:</p>
+                        <input class="delete-reason-input" type="text" @bind="_deleteReason" @bind:event="oninput"
+                               placeholder="Reason (required)">
+                    }
+                    <div class="delete-actions">
+                        <button class="confirm-delete-button" @onclick="ConfirmDeleteAsync"
+                                disabled="@(_isDeleteBusy ||
+                                          (!IsAuthorDelete && IsModeratorDelete && string.IsNullOrWhiteSpace(_deleteReason)))">
+                            Confirm
+                        </button>
+                        <button class="cancel-delete-button" @onclick="CancelDelete" disabled="@_isDeleteBusy">
+                            Cancel
+                        </button>
+                    </div>
+                    @if (_deleteErrorMessage is not null)
+                    {
+                        <p class="error">@_deleteErrorMessage</p>
+                    }
+                </div>
+            }
+            @if (_isReportPending)
+            {
+                <div class="report-container">
+                    <p>Report this post:</p>
+                    <select class="report-category-selector" @bind="_reportCategory">
+                        <option value="Spam">Spam</option>
+                        <option value="Harassment">Harassment</option>
+                        <option value="RuleViolation">Rule Violation</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <InputTextArea class="report-text-area" @bind-Value="_reportMessage" @bind:event="oninput"
+                                   placeholder="Additional details (optional)" maxLength="500"/>
+                    <div class="report-actions">
+                        <button class="confirm-report-button" @onclick="ConfirmReportAsync"
+                                disabled="@_isReportBusy">Submit
+                        </button>
+                        <button class="cancel-report-button" @onclick="CancelReportPost"
+                                disabled="@_isReportBusy">Cancel
+                        </button>
+                    </div>
+                    @if (_reportErrorMessage is not null)
+                    {
+                        <p class="error">@_reportErrorMessage</p>
+                    }
+                </div>
+            }
+        </div>
+
+        <hr>
+
+        <AuthorizeView Context="auth">
+            <Authorized>
+                <div class="comment-box-container">
+                    <h3>Leave a comment</h3>
+                    <EditForm Model="_commentForm" OnValidSubmit="HandleCommentAsync">
+                        <DataAnnotationsValidator/>
+                        <InputTextArea class="comment-text-area" @bind-Value="_commentForm.Content"
+                                       placeholder="Write your thoughts about this post!"/>
+                        <div class="image-selector-container">
+                            <label>Image (optional)</label>
+                            <InputFile OnChange="OnCommentImageSelectedAsync" accept="image/*"
+                                       disabled="@_isCommentImageUploadBusy"/>
+                        </div>
+                        @if (_imagePreviewUrl is not null)
+                        {
+                            <img src="@_imagePreviewUrl" alt="Comment image preview"
+                                 class="comment-image-preview"/>
+                        }
+                        @if (_isCommentImageUploadBusy)
+                        {
+                            <span>Uploading...</span>
+                        }
+                        @if (_commentImageUploadErrorMessage is not null)
+                        {
+                            <p class="error">@_commentImageUploadErrorMessage</p>
+                        }
+                        <button class="comment-box-submit-button" type="submit" disabled="@_isCommentBusy">Comment
+                        </button>
+                        @if (_commentErrorMessage is not null)
+                        {
+                            <p class="error">@_commentErrorMessage</p>
+                        }
+                        <ValidationSummary/>
+                    </EditForm>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <div class="comment-section-container">
+            @if (_comments.Count == 0)
+            {
+                <p>No comments yet. Be the first to comment!</p>
+            }
+            else
+            {
+                @foreach (var comment in _comments)
+                {
+                    <CommentComponent Comment="comment" SubThreadName="@SubThreadName" PostId="_post.Id"
+                                      SubThreadId="_post.SubThreadId"/>
+                }
+            }
+        </div>
+    </div>
+}

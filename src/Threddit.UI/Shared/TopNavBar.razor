@@ -1,0 +1,53 @@
+<nav>
+    <div class="main-nav-container">
+        <div class="logo-container">
+            <NavLink class="logo" href="/"><span class="logo-t">T</span>hreddit</NavLink>
+        </div>
+
+        <div class="search-container">
+            <input class="search-box" type="search" value="@_searchInput" @oninput="OnSearchInputAsync"
+                   @onfocus="OnSearchFocusAsync" @onblur="OnSearchBlur" placeholder="Find your favorite SubThread"
+                   autocomplete="off"/>
+
+            @if (_isSearchOpen)
+            {
+                <div class="search-dropdown">
+                    @if (_isSearchBusy)
+                    {
+                        <div class="search-dropdown-item search-loading">Searching...</div>
+                    }
+                    else if (_searchResults.Count == 0)
+                    {
+                        <div class="search-dropdown-item search-empty">
+                            No communities found. Try widening your search.
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var result in _searchResults)
+                        {
+                            <div class="search-dropdown-item" @onclick="() => NavigateToSubThread(result.Name)">
+                                <span class="search-result-name">t/@result.Name</span>
+                                <span class="search-result-count">@result.SubscriberCount.ToString() members</span>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+        <div class="auth-container">
+            <AuthorizeView>
+                <Authorized>
+                    <NavLink class="topnav-username" href="@($"/u/{CurrentUserStore.Username}")">
+                        @CurrentUserStore.Username
+                    </NavLink>
+                    <NavLink @onclick="LogoutAsync">Logout</NavLink>
+                </Authorized>
+                <NotAuthorized>
+                    <NavLink href="login">Login</NavLink>
+                    <NavLink href="register">Register</NavLink>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    </div>
+</nav>

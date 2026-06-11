@@ -1,0 +1,29 @@
+@page "/register"
+
+<PageTitle>Register - Threddit</PageTitle>
+
+<div class="register-form">
+    <h2>Register</h2>
+
+    <EditForm Model="_form" OnValidSubmit="HandleRegistrationAsync">
+        <DataAnnotationsValidator/>
+
+        <div class="register-inputs">
+            <InputText class="register-text-box" @bind-Value="_form.Username" placeholder="Username"/>
+            <InputText class="register-text-box" @bind-Value="_form.Email" placeholder="Email"/>
+            <InputText class="register-text-box" type="password" @bind-Value="_form.Password" placeholder="Password"/>
+        </div>
+
+        <div class="register-submit-button-container">
+            <button class="register-submit-button" type="submit" disabled="@_busy">Register</button>
+        </div>
+
+        @if (_errorMessage is not null)
+        {
+            <p class="error">@_errorMessage</p>
+        }
+        <div class="register-validation-summary-container">
+            <ValidationSummary/>
+        </div>
+    </EditForm>
+</div>

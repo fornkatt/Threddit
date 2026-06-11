@@ -1,0 +1,154 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Threddit.Domain\Threddit.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="UseCases\SubThread\GetSubThreadByNameUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadByNameUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThread\GetSubThreadsBySearchUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadsBySearchUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Post\DeletePostUseCase.Logging.cs">
+        <DependentUpon>DeletePostUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Auth\LoginUseCase.Logging.cs">
+        <DependentUpon>LoginUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Auth\RegistrationUseCase.Logging.cs">
+        <DependentUpon>RegistrationUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThread\GetSubThreadPostsUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadPostsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Post\GetPostByIdWithCommentsUseCase.Logging.cs">
+        <DependentUpon>GetPostByIdWithCommentsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Posts\DeletePostUseCase.Logging.cs">
+        <DependentUpon>DeletePostUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Posts\GetPostByIdWithCommentsUseCase.Logging.cs">
+        <DependentUpon>GetPostByIdWithCommentsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\GetSubThreadByNameUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadByNameUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\GetSubThreadPostsUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadPostsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\GetSubThreadsBySearchUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadsBySearchUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Comments\GetCommentRepliesUseCase.Logging.cs">
+        <DependentUpon>GetCommentRepliesUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\CreateSubThreadUseCase.Logging.cs">
+        <DependentUpon>CreateSubThreadUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\DeleteSubThreadUseCase.Logging.cs">
+        <DependentUpon>DeleteSubThreadUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Posts\CreatePostUseCase.Logging.cs">
+        <DependentUpon>CreatePostUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Comments\CreateCommentUseCase.Logging.cs">
+        <DependentUpon>CreateCommentUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Posts\VotePostUseCase.Logging.cs">
+        <DependentUpon>VotePostUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Comments\VoteCommentUseCase.Logging.cs">
+        <DependentUpon>VoteCommentUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\SubscribeSubThreadUseCase.Logging.cs">
+        <DependentUpon>SubscribeSubThreadUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\UnsubscribeSubThreadUseCase.Logging.cs">
+        <DependentUpon>UnsubscribeSubThreadUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Comments\DeleteCommentUseCase.Logging.cs">
+        <DependentUpon>DeleteCommentUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\EditSubThreadUseCase.Logging.cs">
+        <DependentUpon>EditSubThreadUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\CreateSubThreadRuleUseCase.Logging.cs">
+        <DependentUpon>CreateSubThreadRuleUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\EditSubThreadRuleUseCase.Logging.cs">
+        <DependentUpon>EditSubThreadRuleUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\DeleteSubThreadRuleUseCase.Logging.cs">
+        <DependentUpon>DeleteSubThreadRuleUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\BanSiteUserUseCase.Logging.cs">
+        <DependentUpon>BanSiteUserUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\UnbanSiteUserUseCase.Logging.cs">
+        <DependentUpon>UnbanSiteUserUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\BanSubThreadUserUseCase.Logging.cs">
+        <DependentUpon>BanSubThreadUserUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\UnbanSubThreadUserUseCase.Logging.cs">
+        <DependentUpon>UnbanSubThreadUserUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\AssignModeratorUseCase.Logging.cs">
+        <DependentUpon>AssignModeratorUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\RemoveModeratorUseCase.Logging.cs">
+        <DependentUpon>RemoveModeratorUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\SubThreads\GetSubThreadModeratorsUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadModeratorsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\GetUserProfileUseCase.Logging.cs">
+        <DependentUpon>GetUserProfileUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\EditUserProfileUseCase.Logging.cs">
+        <DependentUpon>EditUserProfileUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Posts\EditPostUseCase.Logging.cs">
+        <DependentUpon>EditPostUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Comments\EditCommentUseCase.Logging.cs">
+        <DependentUpon>EditCommentUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Reports\CreateSubThreadReportUseCase.Logging.cs">
+        <DependentUpon>CreateSubThreadReportUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Reports\CreateSiteReportUseCase.Logging.cs">
+        <DependentUpon>CreateSiteReportUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Reports\GetSubThreadReportsUseCase.Logging.cs">
+        <DependentUpon>GetSubThreadReportsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Reports\GetSiteReportsUseCase.Logging.cs">
+        <DependentUpon>GetSiteReportsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Reports\SetReportStatusUseCase.Logging.cs">
+        <DependentUpon>SetReportStatusUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\AssignSiteAdminUseCase.Logging.cs">
+        <DependentUpon>AssignSiteAdminUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\RemoveSiteAdminUseCase.Logging.cs">
+        <DependentUpon>RemoveSiteAdminUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\GetAllSiteAdminsUseCase.Logging.cs">
+        <DependentUpon>GetAllSiteAdminsUseCase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="UseCases\Users\GetCurrentUserSummaryUseCase.Logging.cs">
+        <DependentUpon>GetCurrentUserSummaryUseCase.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

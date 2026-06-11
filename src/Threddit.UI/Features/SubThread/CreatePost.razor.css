@@ -1,0 +1,119 @@
+.image-selector-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.post-image-preview {
+  margin-top: 1rem;
+  max-width: 100%;
+  border-radius: 15px;
+}
+
+.create-post-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+::deep .back-button {
+  margin: auto 1rem auto auto;
+  border: none;
+  display: block;
+  text-decoration: none;
+  background-color: #f6f6f6;
+  color: #535353;
+  font-weight: bold;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 25px;
+}
+::deep .back-button:hover {
+  background-color: #d1d1d1;
+  cursor: pointer;
+}
+
+.create-post-form {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+::deep .create-post-text-box {
+  all: unset;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #bab9b9;
+  min-height: 2rem;
+  width: 100%;
+  background-color: white;
+  color: #535353;
+  outline: none;
+  display: block;
+  margin-bottom: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+::deep .create-post-text-box::placeholder {
+  color: #989898;
+}
+
+::deep .create-post-text-area {
+  all: unset;
+  box-sizing: border-box !important;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #bab9b9;
+  min-height: 6rem;
+  min-width: 0;
+  width: 100%;
+  background-color: white;
+  color: #535353;
+  outline: none;
+  display: block;
+  margin-bottom: 10px;
+  resize: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+::deep .create-post-text-area::placeholder {
+  color: #989898;
+}
+
+.create-post-submit-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.create-post-submit-button {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  background-color: #c7e8e5;
+  color: #535353;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.create-post-submit-button:hover {
+  filter: brightness(0.9);
+}
+
+.error {
+  margin-top: 1rem;
+  width: 100%;
+  color: red;
+  font-size: 0.8rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/*# sourceMappingURL=CreatePost.razor.css.map */

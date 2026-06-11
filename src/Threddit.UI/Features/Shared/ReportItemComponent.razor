@@ -1,0 +1,43 @@
+<div class="report-item-container">
+    <div class="report-data">
+        <span class="report-type">Type: @Report.Type</span>
+        <span class="report-category">Category: @Report.Category</span>
+        <span class="report-status report-status--@Report.Status.ToLower()">Current status: @Report.Status</span>
+        <span class="report-date">Reported at: @Report.ReportedAt.ToLocalTime().ToString("yyyy MMMM dd HH:mm")</span>
+    </div>
+    <p class="reported-by">Reported by: <strong>@(Report.ReporterUsername ?? "[deleted]")</strong></p>
+    @if (Report.Message is not null)
+    {
+        <p class="report-message">@Report.Message</p>
+    }
+    <div class="report-target">
+        @if (Report.TargetPostId is not null)
+        {
+            <p>Post: <em>@(Report.TargetPostTitle ?? "[deleted]")</em></p>
+        }
+        @if (Report.TargetCommentId is not null)
+        {
+            <p>Comment: <em>@(Report.TargetCommentContent ?? "[deleted]")</em></p>
+        }
+        @if (Report.TargetUserId is not null)
+        {
+            <p>User: <em>@(Report.TargetUsername ?? "[deleted]")</em></p>
+        }
+        @if (Report.TargetSubThreadId is not null)
+        {
+            <p>SubThread: <em>@(Report.TargetSubThreadName ?? "[deleted]")</em></p>
+        }
+    </div>
+    <div class="report-actions">
+        <button @onclick="MarkReceivedAsync" disabled="@IsBusy">
+            Mark Received
+        </button>
+        <button @onclick="MarkDismissedAsync" disabled="@IsBusy">
+            Mark Dismissed
+        </button>
+        <button @onclick="MarkResolvedAsync" disabled="@IsBusy">
+            Mark Resolved
+        </button>
+    </div>
+    <hr/>
+</div>

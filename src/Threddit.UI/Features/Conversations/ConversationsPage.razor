@@ -1,0 +1,82 @@
+@page "/conversations"
+
+<PageTitle>Conversations - Threddit</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="conversations-page">
+            <div class="conversations-header">
+                @if (!string.IsNullOrWhiteSpace(_errorMessage))
+                {
+                    <p class="error">@_errorMessage</p>
+                }
+                <h2>Conversations</h2>
+                <button class="create-new-group-button"
+                        @onclick="() => _showNewGroup = !_showNewGroup">New Group
+                </button>
+            </div>
+
+            @if (_showNewGroup)
+            {
+                <div class="new-group-form">
+                    <input type="text" @bind="_newGroupName" placeholder="Group name" maxlength="100"/>
+                    <input type="text" @bind="_newGroupUsernames" placeholder="Usernames to add (comma-separated)"/>
+                    <button class="confirm-create-group-button" @onclick="CreateGroupAsync" disabled="@_isBusy">Create
+                    </button>
+                    @if (_groupErrorMessage is not null)
+                    {
+                        <p class="error">@_groupErrorMessage</p>
+                    }
+                </div>
+            }
+
+            @if (_isLoading)
+            {
+                <p>Loading...</p>
+            }
+            else
+            {
+                <h3>Direct Messages</h3>
+                @if (_conversations.Count == 0)
+                {
+                    <p>No conversations yet.</p>
+                }
+
+                <ul class="conversation-list">
+                    @foreach (var conversation in _conversations)
+                    {
+                        <li class="conversation-item" @onclick="() => OpenConversation(conversation.Id, false)">
+                            <span class="conversation-username">
+                                Conversation with <strong>@(conversation.OtherUsername ?? "[deleted]")</strong>
+                            </span>
+                            <span class="conversation-date">
+                                @conversation.CreatedAt.ToLocalTime().ToString("yyyy MMMM dd")
+                            </span>
+                        </li>
+                    }
+                </ul>
+
+                <h3>Group Conversations</h3>
+                @if (_groups.Count == 0)
+                {
+                    <p>No groups yet.</p>
+                }
+
+                <ul class="conversation-list">
+                    @foreach (var group in _groups)
+                    {
+                        <li class="conversation-item" @onclick="() => OpenConversation(group.Id, true)">
+                            <span class="conversation-name"><strong>@group.Name</strong></span>
+                            <span class="conversation-members">
+                            @group.Members.Count(m => !m.HasLeft).ToString() members
+                        </span>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to view your conversations.</p>
+    </NotAuthorized>
+</AuthorizeView>

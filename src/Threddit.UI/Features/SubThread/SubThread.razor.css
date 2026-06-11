@@ -1,0 +1,171 @@
+.subthread-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+.subthread-header .subthread-buttons {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-left: auto;
+}
+.subthread-header .create-post-button:hover {
+  background-color: #d1d1d1;
+}
+.subthread-header .join-button {
+  padding: 0.5rem 1rem;
+  color: #535353;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 20px;
+  background-color: #c7e8e5;
+  cursor: pointer;
+}
+.subthread-header .join-button:hover {
+  filter: brightness(0.9);
+}
+.subthread-header a {
+  font-weight: bold;
+  max-height: 1.2rem;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 25px;
+  padding: 0.8rem;
+  overflow: hidden;
+}
+.subthread-header a:hover {
+  cursor: pointer;
+}
+
+.subthread-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.subthread-banner {
+  width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.subthread-banner img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.subthread-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.subthread-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.post-card {
+  background-color: white;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+  padding: 1rem;
+  max-height: 750px;
+}
+.post-card:hover {
+  background-color: #d1d1d1;
+}
+
+.post-top-row {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.posted-by-username {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.posted-at {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 0.8rem;
+  color: #989898;
+}
+
+.post-title {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.post-preview {
+  margin-bottom: 1.5rem;
+}
+
+.post-preview-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  max-height: 350px;
+}
+
+::deep .posted-by-username {
+  margin-bottom: auto;
+  margin-top: auto;
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+.post-preview-text {
+  font-size: 0.85rem;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow-y: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.post-bottom-row {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+.post-bottom-row span {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.scroll-sentinel {
+  height: 1px;
+}
+
+.loading-more-text {
+  text-align: center;
+  padding: 1rem;
+}
+
+.subthread-loading,
+.subthread-no-posts {
+  text-align: center;
+  padding: 3rem;
+}
+
+/*# sourceMappingURL=SubThread.razor.css.map */

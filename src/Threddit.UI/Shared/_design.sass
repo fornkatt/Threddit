@@ -1,0 +1,170 @@
+$background-color: #f6f6f6
+$default-text-color: #535353
+$default-placeholder-color: #989898
+$button-hover-color: #d1d1d1
+$border-color: #bab9b9
+$left-sidebar-separator-color: #e0e0e0
+$main-brand-color: #c7e8e5
+$delete-button-color: #f5c6cb
+
+$logo-font: Helvetica, Arial, sans-serif
+
+@mixin input-box
+  all: unset
+  padding: 10px
+  border-radius: 25px
+  border: 1px solid $border-color
+  min-height: 2rem
+  width: 100%
+  background-color: white
+  color: $default-text-color
+  outline: none
+  display: block
+  margin-bottom: 10px
+  appearance: none
+  -webkit-appearance: none
+  box-sizing: border-box
+
+  &::placeholder
+    color: $default-placeholder-color
+
+@mixin text-area-box
+  all: unset
+  box-sizing: border-box !important
+  padding: 10px
+  border-radius: 15px
+  border: 1px solid $border-color
+  min-height: 6rem
+  min-width: 0
+  width: 100%
+  background-color: white
+  color: $default-text-color
+  outline: none
+  display: block
+  margin-bottom: 10px
+  resize: none
+  overflow-x: hidden
+  overflow-y: auto
+  white-space: pre-wrap
+  word-wrap: break-word
+  overflow-wrap: anywhere
+
+  &::placeholder
+    color: $default-placeholder-color
+
+@mixin submit-button-container
+  width: 100%
+  display: flex
+  justify-content: center
+    
+@mixin base-button
+  padding: 8px 15px
+  border-radius: 25px
+  border: none
+  background-color: white
+  color: $default-text-color
+  cursor: pointer
+  font-weight: bold
+  font-size: 0.75rem
+
+  &:hover
+    filter: brightness(0.95)
+    
+@mixin submit-button
+  padding: 10px 20px
+  border-radius: 25px
+  border: none
+  background-color: $main-brand-color
+  color: $default-text-color
+  cursor: pointer
+  font-size: 1rem
+
+  &:hover
+    filter: brightness(0.9)
+    
+@mixin comment-button
+  padding: 8px 15px
+  border-radius: 25px
+  border: none
+  background-color: $main-brand-color
+  color: $default-text-color
+  cursor: pointer
+  font-weight: bold
+  font-size: 0.75rem
+
+  &:hover
+    filter: brightness(0.9)
+    
+@mixin edit-button
+  @include base-button
+    
+@mixin delete-button
+  @include base-button
+  background-color: $delete-button-color
+
+@mixin error-text
+  margin-top: 1rem
+  width: 100%
+  color: red
+  font-size: 0.8rem
+  word-break: break-word
+  overflow-wrap: break-word
+
+@mixin form
+  width: 100%
+  max-width: 420px
+  display: flex
+  flex-direction: column
+  margin: 0 auto
+  
+@mixin post-comment-author
+  margin-top: auto
+  margin-bottom: auto
+  font-weight: bold
+  font-size: 0.9rem
+  
+@mixin post-comment-date
+  margin-top: auto
+  margin-bottom: auto
+  font-size: 0.8rem
+  color: $default-placeholder-color
+  
+@mixin comment-post-score-count
+  font-weight: bold
+  font-size: 0.9rem
+  
+@mixin back-button
+  border: none
+  display: block
+  text-decoration: none
+  background-color: $background-color
+  color: $default-text-color
+  font-weight: bold
+  box-sizing: border-box
+  padding: 8px
+  border-radius: 25px
+
+  &:hover
+    background-color: $button-hover-color
+    cursor: pointer
+    
+@mixin category-selector
+  border-radius: 5px
+  border: 1px solid $border-color
+  background-color: white
+  margin-bottom: 0.5rem
+  
+@mixin username-link
+  text-decoration: none
+  color: inherit
+  font-weight: bold
+  
+@mixin vote-button
+  padding: 0.4rem
+  border: none
+  border-radius: 10px
+  background-color: white
+
+  &:hover
+    filter: brightness(0.9)
+    cursor: pointer

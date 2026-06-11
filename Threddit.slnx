@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/Threddit.UI/Threddit.UI.csproj" />
+  <Project Path="src\Threddit.API/Threddit.API.csproj" />
+  <Project Path="src\Threddit.Application\Threddit.Application.csproj" />
+  <Project Path="src\Threddit.Domain\Threddit.Domain.csproj" />
+  <Project Path="src\Threddit.Infrastructure\Threddit.Infrastructure.csproj" />
+  <Project Path="src\Threddit.Contracts/Threddit.Contracts.csproj" />
+</Solution>

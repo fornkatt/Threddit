@@ -1,0 +1,61 @@
+@use "../../Shared/design"
+
+.user-profile-page
+  width: 100%
+  max-width: none
+
+.user-profile-edit
+  margin-top: 1rem
+
+.user-profile-base-info
+  display: flex
+  flex-direction: row
+  gap: 1rem
+
+.user-profile-username
+  margin-bottom: auto
+  margin-top: auto
+  font-weight: bold
+  font-size: 1.2rem
+  
+.user-profile-joined
+  margin-bottom: auto
+  margin-top: auto
+  font-size: 0.8rem
+  color: design.$default-placeholder-color
+
+.user-profile-score
+  display: flex
+  flex-wrap: wrap
+  gap: 0.5rem
+  margin-top: 1rem
+    
+.message-button
+  @include design.comment-button
+  margin-top: 1rem
+  margin-left: 8px
+  
+.edit-profile-form
+  display: flex
+  flex-direction: column
+  gap: 1rem
+  
+.edit-actions
+  display: flex
+  flex-direction: row
+  gap: 1rem
+  
+.profile-picture-preview
+  border-radius: 50%
+  object-fit: cover
+  width: 128px
+  height: 128px
+  
+::deep .edit-text-area
+  @include design.text-area-box
+  
+.edit-save-button, .edit-profile-button
+  @include design.comment-button
+  
+.edit-cancel-button
+  @include design.delete-button

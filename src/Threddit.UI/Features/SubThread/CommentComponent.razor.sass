@@ -1,0 +1,93 @@
+@use "../../Shared/design"
+
+.comment-image-container
+  margin-top: 1rem
+
+.comment-image, .reply-image-preview
+  border-radius: 15px
+  max-width: 100%
+
+::deep .commented-by-username
+  margin-bottom: auto
+  margin-top: auto
+  @include design.username-link
+
+.comment-content
+  white-space: pre-wrap
+  word-wrap: break-word
+  overflow-wrap: anywhere
+
+.edit-box-container
+  margin-top: 1rem
+  margin-bottom: 2rem
+
+::deep .edit-text-area, ::deep .report-text-area
+  @include design.text-area-box
+  
+.edit-button, .cancel-edit-button
+  @include design.edit-button
+  
+.delete-button, .confirm-delete-button, .cancel-report-button
+  @include design.delete-button
+  
+.report-button
+  @include design.base-button
+  
+.vote-button
+  @include design.vote-button
+  
+.comment-score
+  margin-bottom: auto
+  margin-top: auto
+  
+.delete-reason-input
+  @include design.input-box
+
+.report-category-selector
+  @include design.category-selector
+
+.comment-header
+  display: flex
+  flex-direction: row
+  gap: 0.5rem
+
+  .comment-author
+    @include design.post-comment-author
+    
+  .comment-date
+    @include design.post-comment-date
+
+.comment-replies
+  margin-top: 1.5rem
+  margin-left: 1.5rem
+  padding-left: 0.75rem
+  
+.reply-toggle-button, .load-replies-button, .reply-button, .confirm-edit-button, .cancel-delete-button,
+.confirm-report-button
+  @include design.comment-button
+  
+.comment-footer
+  margin-top: auto
+  margin-bottom: auto
+  display: flex
+  flex-direction: row
+  gap: 1rem
+  
+  .comment-score-container
+    margin-top: auto
+    margin-bottom: auto
+    display: flex
+    gap: 0.2rem
+    flex-direction: row
+    
+    span
+      @include design.comment-post-score-count
+    
+::deep .comment-text-area
+  @include design.text-area-box
+  
+.reply-box-container
+  margin-top: 1rem
+  
+.error
+  @include design.error-text

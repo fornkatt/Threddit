@@ -1,0 +1,60 @@
+.left-sidebar-container {
+  margin: 0;
+  padding: 0 10px;
+  position: fixed;
+  top: calc(4rem + 1px);
+  left: 0;
+  height: calc(100vh - 4rem - 1px);
+  overflow-y: auto;
+  min-width: 250px;
+  border-right: 1px solid #bab9b9;
+}
+@media (max-width: 768px) {
+  .left-sidebar-container {
+    min-width: 0;
+    width: 90px;
+    padding: 0;
+    overflow-x: hidden;
+  }
+}
+.left-sidebar-container ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  list-style: none;
+  border-bottom: 1px solid #e0e0e0;
+}
+.left-sidebar-container ul li {
+  list-style: none;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.left-sidebar-container ul li:first-child {
+  margin-top: 10px;
+}
+.left-sidebar-container ul li ::deep a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #535353;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 25px;
+}
+.left-sidebar-container ul li ::deep a:hover {
+  background-color: #d1d1d1;
+  cursor: pointer;
+}
+
+.left-sidebar-communities-section p {
+  font-weight: bold;
+}
+
+.admin-section-header {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=LeftSidebar.razor.css.map */

@@ -1,0 +1,100 @@
+@using Threddit.UI.Features.Shared
+
+@page "/t/{SubThreadName}"
+
+<PageTitle>t/@SubThreadName - Threddit</PageTitle>
+
+@if (_isLoadingSubThread)
+{
+    <div class="subthread-loading">
+        <p>Fetching SubThread...</p>
+    </div>
+}
+else if (_errorMessage is not null)
+{
+    <p class="error">@_errorMessage</p>
+}
+else if (_subThread is not null)
+{
+    <div class="subthread-page">
+        @if (_subThread.BannerImageUrl is not null)
+        {
+            <div class="subthread-banner">
+                <img src="@_subThread.BannerImageUrl" alt="@_subThread.Name Banner"/>
+            </div>
+        }
+
+        <div class="subthread-header">
+            <h1 class="subthread-title">t/@_subThread.Name</h1>
+            <AuthorizeView Context="auth">
+                <Authorized>
+                    <div class="subthread-buttons">
+                        <a class="create-post-button" href="/t/@_subThread.Name/posts/create">Create Post</a>
+                        <button class="join-button" @onclick="HandleSubscribeAsync" disabled="@_isSubscribeBusy">
+                            @(IsSubscribed ? "Joined" : "Join")
+                        </button>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+
+        <div class="subthread-content">
+            <div class="subthread-posts">
+                @if (_posts.Count == 0)
+                {
+                    <p class="subthread-no-posts">No posts yet. Be the first to make one!</p>
+                }
+                else
+                {
+                    @foreach (var post in _posts)
+                    {
+                        <a class="post-card" href="/t/@_subThread.Name/posts/@post.Id/@post.Slug">
+                            <div class="post-body">
+                                <div class="post-top-row">
+                                    <UserAvatarComponent ProfilePictureUrl="@post.PostedByProfilePicture"
+                                                         Username="@post.PostedByUsername"
+                                                         OnClick="@(() => NavigateToUserProfile(post.PostedByUsername))"/>
+                                    <NavLink href="@($"/u/{post.PostedByUsername}")" class="posted-by-username">
+                                        @(post.PostedByUsername ?? "[deleted]")
+                                    </NavLink>
+                                    <span class="posted-at">
+                                        @post.PostedAt.ToLocalTime().ToString("yyyy MMMM dd HH:mm")
+                                    </span>
+                                </div>
+                                <h3 class="post-title">@post.Title</h3>
+                                <div class="post-preview">
+                                    @if (post.ImageUrl is not null)
+                                    {
+                                        <div class="post-preview-image-container">
+                                            <img class="post-preview-image" src="@post.ImageUrl"
+                                                 alt="Image for post with title '@post.Title'"/>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="post-preview-text">@(post.Content ?? "[deleted]")</p>
+                                    }
+                                </div>
+                                <div class="post-bottom-row">
+                                    <div class="post-score-container">
+                                        <span class="post-score">@post.Score.ToString()</span>
+                                    </div>
+                                    <div class="comment-count-container">
+                                        <span class="post-replies-count">💬 @post.CommentCount.ToString()</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <hr>
+                    }
+                }
+
+                <div @ref="_scrollSentinel" class="scroll-sentinel"></div>
+                @if (_isLoadingMorePosts)
+                {
+                    <p class="loading-more-text">Loading more posts...</p>
+                }
+            </div>
+        </div>
+    </div>
+}

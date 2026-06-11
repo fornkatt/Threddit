@@ -1,0 +1,56 @@
+@use "design"
+
+.left-sidebar-container
+  margin: 0
+  padding: 0 10px
+  position: fixed
+  top: calc(4rem + 1px)
+  left: 0
+  height: calc(100vh - 4rem - 1px)
+  overflow-y: auto
+  min-width: 250px
+  border-right: 1px solid design.$border-color
+
+  @media (max-width: 768px)
+    min-width: 0
+    width: 90px
+    padding: 0
+    overflow-x: hidden
+
+  ul
+    display: flex
+    flex-direction: column
+    margin: 0
+    padding: 0
+    width: auto
+    list-style: none
+    border-bottom: 1px solid design.$left-sidebar-separator-color
+
+    li
+      list-style: none
+      margin-bottom: 10px
+      width: 100%
+
+      &:first-child
+        margin-top: 10px
+
+      ::deep a
+        display: block
+        width: 100%
+        text-decoration: none
+        color: design.$default-text-color
+        box-sizing: border-box
+        padding: 8px
+        border-radius: 25px
+
+        &:hover
+          background-color: design.$button-hover-color
+          cursor: pointer
+
+.left-sidebar-communities-section
+  p
+    font-weight: bold
+
+.admin-section-header
+  font-weight: bold
+  cursor: pointer

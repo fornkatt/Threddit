@@ -1,0 +1,29 @@
+@using Threddit.UI.Features.Shared
+
+<div class="reports-component-container">
+    <div class="report-filters">
+        <label>Filter:</label>
+        <select class="filter-selector" @bind="_statusFilter" @bind:after="LoadAsync">
+            <option value="Pending">Pending</option>
+            <option value="Received">Received</option>
+            <option value="Dismissed">Dismissed</option>
+            <option value="Resolved">Resolved</option>
+            <option value="">All</option>
+        </select>
+    </div>
+    @if (_isLoading)
+    {
+        <p>Loading reports...</p>
+    }
+    else if (_reports.Count == 0)
+    {
+        <p>No reports found with the current filter.</p>
+    }
+    else
+    {
+        @foreach (var report in _reports)
+        {
+            <ReportItemComponent Report="report" IsBusy="_isBusy" OnSetStatus="SetStatusAsync"/>
+        }
+    }
+</div>

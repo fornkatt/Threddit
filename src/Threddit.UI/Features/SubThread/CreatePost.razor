@@ -1,0 +1,48 @@
+@page "/t/{SubThreadName}/posts/create"
+
+<PageTitle>Create post - t/@SubThreadName - Threddit</PageTitle>
+
+<div class="create-post-form">
+    <div class="create-post-header">
+        <h2>Create a new post in t/@SubThreadName</h2>
+        <button class="back-button" @onclick="NavigateToSubThread">Back</button>
+    </div>
+
+    <EditForm Model="_form" OnValidSubmit="HandleCreateAsync">
+        <DataAnnotationsValidator/>
+
+        <div class="create-post-inputs">
+            <InputText class="create-post-text-box" @bind-Value="_form.Title" placeholder="Title"/>
+            <InputTextArea class="create-post-text-area" @bind-Value="_form.Content" placeholder="Content"/>
+            <div class="image-selector-container">
+                <label>Image (optional)</label>
+                <InputFile class="image-selector" OnChange="OnPostImageSelectedAsync" accept="image/*"
+                           disabled="@_isImageUploadBusy"/>
+            </div>
+            @if (_imagePreviewUrl is not null)
+            {
+                <img src="@_imagePreviewUrl" alt="Post image preview" class="post-image-preview"/>
+            }
+            @if (_isImageUploadBusy)
+            {
+                <span>Uploading...</span>
+            }
+            @if (_imageUploadErrorMessage is not null)
+            {
+                <p class="error">@_imageUploadErrorMessage</p>
+            }
+        </div>
+
+        <div class="create-post-submit-button-container">
+            <button class="create-post-submit-button" type="submit" disabled="@_isBusy">Post</button>
+        </div>
+
+        @if (_errorMessage is not null)
+        {
+            <p class="error">@_errorMessage</p>
+        }
+        <div class="create-post-validation-summary-container">
+            <ValidationSummary/>
+        </div>
+    </EditForm>
+</div>

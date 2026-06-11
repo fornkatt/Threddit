@@ -1,0 +1,46 @@
+<div class="left-sidebar-container">
+    <ul class="left-sidebar-top-section">
+        <li>
+            <NavLink href="/">Home</NavLink>
+        </li>
+        <AuthorizeView>
+            <Authorized>
+                <li>
+                    <NavLink href="/conversations">Messages</NavLink>
+                </li>
+                <li>
+                    <NavLink href="/create-subthread">Start a community</NavLink>
+                </li>
+            </Authorized>
+        </AuthorizeView>
+    </ul>
+    <AuthorizeView>
+        <Authorized>
+            <ul class="left-sidebar-communities-section">
+                <p>Communities</p>
+                @foreach (var name in CurrentUserStore.SubscribedSubThreadNames)
+                {
+                    <li>
+                        <NavLink href="@($"/t/{name}")">t/@name</NavLink>
+                    </li>
+                }
+            </ul>
+            @if (CurrentUserStore.IsLoaded && (CurrentUserStore.IsSiteOwner || CurrentUserStore.IsSiteAdmin))
+            {
+                <ul class="left-sidebar-admin-section">
+                    <li class="admin-section-header" @onclick="ToggleAdminSection">
+                        <span>Admin actions</span>
+                        <span class="admin-section-chevron">@(_isAdminSectionOpen ? "▲" : "▼")</span>
+                    </li>
+                    @if (_isAdminSectionOpen)
+                    {
+                        <li>
+                            <NavLink href="@AdminReportsHref">View reports</NavLink>
+                        </li>
+                    }
+                </ul>
+            }
+        </Authorized>
+    </AuthorizeView>
+</div>
+

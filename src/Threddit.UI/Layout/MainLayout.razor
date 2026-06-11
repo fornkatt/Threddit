@@ -1,0 +1,16 @@
+﻿@using Threddit.UI.Features.Shared
+@inherits LayoutComponentBase
+
+<div class="app-shell">
+    <TopNavBar/>
+
+    <div class="app-row">
+        <LeftSidebar/>
+
+        <div class="app-body">
+            <div class="app-content">
+                @Body
+            </div>
+        </div>
+    </div>
+</div>

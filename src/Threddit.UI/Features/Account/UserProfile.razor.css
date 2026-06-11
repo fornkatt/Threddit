@@ -1,0 +1,130 @@
+.user-profile-page {
+  width: 100%;
+  max-width: none;
+}
+
+.user-profile-edit {
+  margin-top: 1rem;
+}
+
+.user-profile-base-info {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.user-profile-username {
+  margin-bottom: auto;
+  margin-top: auto;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.user-profile-joined {
+  margin-bottom: auto;
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: #989898;
+}
+
+.user-profile-score {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.message-button {
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: none;
+  background-color: #c7e8e5;
+  color: #535353;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+.message-button:hover {
+  filter: brightness(0.9);
+}
+.message-button {
+  margin-top: 1rem;
+  margin-left: 8px;
+}
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.profile-picture-preview {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 128px;
+  height: 128px;
+}
+
+::deep .edit-text-area {
+  all: unset;
+  box-sizing: border-box !important;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #bab9b9;
+  min-height: 6rem;
+  min-width: 0;
+  width: 100%;
+  background-color: white;
+  color: #535353;
+  outline: none;
+  display: block;
+  margin-bottom: 10px;
+  resize: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+::deep .edit-text-area::placeholder {
+  color: #989898;
+}
+
+.edit-save-button, .edit-profile-button {
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: none;
+  background-color: #c7e8e5;
+  color: #535353;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+.edit-save-button:hover, .edit-profile-button:hover {
+  filter: brightness(0.9);
+}
+
+.edit-cancel-button {
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: none;
+  background-color: white;
+  color: #535353;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+.edit-cancel-button:hover {
+  filter: brightness(0.95);
+}
+.edit-cancel-button {
+  background-color: #f5c6cb;
+}
+
+/*# sourceMappingURL=UserProfile.razor.css.map */

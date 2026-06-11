@@ -1,0 +1,28 @@
+@page "/login"
+
+<PageTitle>Login - Threddit</PageTitle>
+
+<div class="login-form">
+    <h2>Login</h2>
+
+    <EditForm Model="_form" OnValidSubmit="HandleLoginAsync">
+        <DataAnnotationsValidator/>
+
+        <div class="login-inputs">
+            <InputText class="login-text-box" @bind-Value="_form.UsernameOrEmail" placeholder="Username or email"/>
+            <InputText class="login-text-box" type="password" @bind-Value="_form.Password" placeholder="Password"/>
+        </div>
+
+        <div class="login-submit-button-container">
+            <button class="login-submit-button" type="submit" disabled="@_busy">Login</button>
+        </div>
+
+        @if (_errorMessage is not null)
+        {
+            <p class="error">@_errorMessage</p>
+        }
+        <div class="login-validation-summary-container">
+            <ValidationSummary/>
+        </div>
+    </EditForm>
+</div>

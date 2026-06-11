@@ -1,0 +1,29 @@
+@using Threddit.UI.Features.Shared
+
+@page "/admin/reports"
+
+@if (!CurrentUserStore.IsLoaded)
+{
+    <p>Loading...</p>
+}
+else if (CurrentUserStore is { IsSiteAdmin: false, IsSiteOwner: false })
+{
+    <p class="error">Access denied.</p>
+}
+else
+{
+    <h2>Site Reports</h2>
+    <SiteReportsComponent/>
+
+    <hr/>
+
+    <h2>SubThread Reports</h2>
+    @if (!string.IsNullOrWhiteSpace(SubThreadName))
+    {
+        <SubThreadReportsComponent SubThreadName="@SubThreadName"/>
+    }
+    else
+    {
+        <p>Navigate to a subthread to view reports.</p>
+    }
+}

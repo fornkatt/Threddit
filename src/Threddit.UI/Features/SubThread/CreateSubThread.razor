@@ -1,0 +1,32 @@
+@page "/create-subthread"
+
+<PageTitle>Create a new Subthread - Threddit</PageTitle>
+
+<div class="create-subthread-form">
+    <div class="header-container">
+        <h2>Create a new SubThread.</h2>
+        <NavLink class="back-button" href="/">Back</NavLink>
+    </div>
+
+    <EditForm Model="_form" OnValidSubmit="HandleCreateAsync">
+        <DataAnnotationsValidator/>
+
+        <div class="create-subthread-inputs">
+            <InputText class="create-subthread-text-box" @bind-Value="_form.Name" placeholder="SubThread name"/>
+            <InputTextArea class="create-subthread-text-area" @bind-Value="_form.Description"
+                           placeholder="Optional description"/>
+        </div>
+
+        <div class="create-subthread-submit-button-container">
+            <button class="create-subthread-submit-button" type="submit" disabled="@_busy">Create</button>
+        </div>
+
+        @if (_errorMessage is not null)
+        {
+            <p class="error">@_errorMessage</p>
+        }
+        <div class="create-subthread-validation-summary-container">
+            <ValidationSummary/>
+        </div>
+    </EditForm>
+</div>

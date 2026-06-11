@@ -1,0 +1,33 @@
+@use "../../Shared/design"
+
+.login-form
+  width: 100%
+  max-width: 420px
+  display: flex
+  flex-direction: column
+  margin: 0 auto
+  
+.login-inputs
+  width: 100%
+
+::deep .login-text-box
+  @include design.input-box
+  
+.login-submit-button-container
+  width: 100%
+  display: flex
+  justify-content: center
+
+.login-submit-button
+  @include design.submit-button
+  
+.error
+  @include design.error-text
+  
+.login-validation-summary-container
+  width: 100%
+  
+  ::deep ul
+    padding: 0
+    margin: 0
+    @include design.error-text

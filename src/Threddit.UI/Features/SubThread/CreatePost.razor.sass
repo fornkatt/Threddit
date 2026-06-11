@@ -1,0 +1,40 @@
+@use "../../Shared/design"
+
+.image-selector-container
+  margin-top: 1rem
+  display: flex
+  flex-direction: row
+  gap: 1rem
+
+.post-image-preview
+  margin-top: 1rem
+  max-width: 100%
+  border-radius: 15px
+  
+.create-post-header
+  display: flex
+  flex-direction: row
+  margin-bottom: 1rem
+
+::deep .back-button
+  margin: auto 1rem auto auto
+  @include design.back-button
+
+.create-post-form
+  @include design.form
+  
+::deep .create-post-text-box
+  @include design.input-box
+  
+::deep .create-post-text-area
+  @include design.text-area-box
+  
+.create-post-submit-button-container
+  @include design.submit-button-container
+  margin-top: 2rem
+  
+.create-post-submit-button
+  @include design.submit-button
+  
+.error
+  @include design.error-text

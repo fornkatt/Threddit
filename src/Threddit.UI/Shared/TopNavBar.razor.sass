@@ -1,0 +1,104 @@
+@use "design"
+
+nav
+  margin: 0
+  background-color: design.$background-color
+  border-bottom: 1px solid design.$border-color
+  height: 4rem
+  padding: 0 25px
+  position: sticky
+  z-index: 100
+  top: 0
+
+.search-box
+  padding: 10px
+  border-radius: 25px
+  border: 1px solid design.$border-color
+  min-height: 2rem
+  min-width: 18rem
+  text-align: left
+    
+  &::placeholder
+    text-align: center
+    
+.main-nav-container
+  margin: 0
+  display: flex
+  align-items: center
+  height: 100%
+  
+  .logo-container
+    flex: 1
+    display: flex
+    align-items: center
+
+  ::deep a.logo
+    font-family: design.$logo-font
+    padding: 0
+    font-size: 30px
+    font-weight: bolder
+    
+    .logo-t
+      color: design.$main-brand-color
+    
+    &:hover
+      cursor: pointer
+      background-color: transparent
+    
+  .auth-container
+    flex: 1
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    gap: 10px
+
+  ::deep a
+    text-decoration: none
+    color: inherit
+    border-radius: 25px
+    padding: 8px
+    
+    &:hover
+      cursor: pointer
+      background-color: design.$button-hover-color
+      
+.search-container
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+
+.search-dropdown
+  position: absolute
+  //top: calc(100% + 4px)
+  left: 0
+  right: 0
+  background-color: white
+  border: 1px solid design.$border-color
+  border-radius: 12px
+  overflow: hidden
+  z-index: 200
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
+
+.search-dropdown-item
+  padding: 10px 16px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  cursor: pointer
+
+  &:hover
+    background-color: design.$button-hover-color
+
+.search-result-name
+  font-weight: 500
+
+.search-result-count
+  font-size: 0.8rem
+  color: design.$default-text-color
+
+.search-loading, .search-empty
+  color: design.$default-placeholder-color
+  cursor: default
+
+  &:hover
+    background-color: transparent
