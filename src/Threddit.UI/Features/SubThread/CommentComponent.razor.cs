@@ -71,7 +71,7 @@ public sealed partial class CommentComponent : ComponentBase
     {
         if (Comment.Replies.Count > 0)
         {
-            _replies = [..Comment.Replies];
+            _replies = Comment.Replies.OrderByDescending(r => r.CommentedAt).ToList();
             _isRepliesLoaded = true;
         }
     }
@@ -84,7 +84,7 @@ public sealed partial class CommentComponent : ComponentBase
 
         if (result.IsSuccess)
         {
-            _replies = [..result.Value!];
+            _replies = result.Value!.OrderByDescending(r => r.CommentedAt).ToList();
             _isRepliesLoaded = true;
         }
 
@@ -136,7 +136,7 @@ public sealed partial class CommentComponent : ComponentBase
         if (result.IsSuccess)
         {
             var r = result.Value!;
-            _replies.Add(new GetCommentApiResponse(
+            _replies.Insert(0, new GetCommentApiResponse(
                 r.Id,
                 r.CommentedById,
                 r.CommentedByUsername,

@@ -64,7 +64,7 @@ public sealed partial class ViewPost : ComponentBase
         if (result.IsSuccess)
         {
             _post = result.Value!;
-            _comments = [.._post.Comments];
+            _comments = _post.Comments.OrderByDescending(c => c.CommentedAt).ToList();
         }
         else
         {

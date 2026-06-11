@@ -213,8 +213,10 @@ else if (_post is not null)
             {
                 @foreach (var comment in _comments)
                 {
-                    <CommentComponent Comment="comment" SubThreadName="@SubThreadName" PostId="_post.Id"
-                                      SubThreadId="_post.SubThreadId"/>
+                    <div class="comment" @key="comment.Id">
+                        <CommentComponent Comment="comment" SubThreadName="@SubThreadName" PostId="_post.Id"
+                                          SubThreadId="_post.SubThreadId"/>
+                    </div>
                 }
             }
         </div>
