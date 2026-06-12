@@ -91,7 +91,7 @@ public class UserController : ControllerBase
             summary.IsSiteOwner,
             summary.IsSiteAdmin,
             summary.Subscriptions.Select(s => new SubscribedSubThreadApiDto(s.Id, s.Name))
-                .ToImmutableList(),
+                .ToList().AsReadOnly(),
             summary.OwnedSubThreadIds,
             summary.ModeratedSubThreadIds
         ));

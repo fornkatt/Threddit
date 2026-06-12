@@ -38,11 +38,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.message-button:hover {
+  filter: brightness(0.95);
+}
+.message-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.message-button:disabled:hover {
+  filter: none;
+}
+.message-button {
+  background-color: #c7e8e5;
 }
 .message-button:hover {
   filter: brightness(0.9);
@@ -100,11 +113,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.edit-save-button:hover, .edit-profile-button:hover {
+  filter: brightness(0.95);
+}
+.edit-save-button:disabled, .edit-profile-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.edit-save-button:disabled:hover, .edit-profile-button:disabled:hover {
+  filter: none;
+}
+.edit-save-button, .edit-profile-button {
+  background-color: #c7e8e5;
 }
 .edit-save-button:hover, .edit-profile-button:hover {
   filter: brightness(0.9);
@@ -122,6 +148,13 @@
 }
 .edit-cancel-button:hover {
   filter: brightness(0.95);
+}
+.edit-cancel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.edit-cancel-button:disabled:hover {
+  filter: none;
 }
 .edit-cancel-button {
   background-color: #f5c6cb;

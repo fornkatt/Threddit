@@ -35,16 +35,17 @@ public sealed partial class DeletePostUseCase : IDeletePostUseCase
 
         var isSitePrivileged = request.IsSiteAdmin || request.IsSiteOwner;
         var isModerator = request.ModeratedSubThreadIds.Contains(post.SubThreadId);
+        var isSubThreadOwner = request.OwnedSubThreads.Contains(post.SubThreadId);
         var isAuthor = post.PostedById == request.RequestingUserId;
 
-        if (!isSitePrivileged && !isModerator && !isAuthor)
+        if (!isSitePrivileged && !isModerator && !isAuthor && !isSubThreadOwner)
         {
             LogUnauthorizedDeletionAttempt(request.RequestingUserId, request.PostId);
             var message = ResolveErrorMessage(ErrorType.Forbidden);
             return new DeletePostResponse(false, message, ErrorType.Forbidden);
         }
 
-        if (!isAuthor && (isSitePrivileged || isModerator) && string.IsNullOrWhiteSpace(request.Reason))
+        if (!isAuthor && (isSitePrivileged || isModerator || isSubThreadOwner) && string.IsNullOrWhiteSpace(request.Reason))
         {
             LogDeletionFailure(request.PostId, "Reason is required for site admins and moderators.");
             var message = ResolveErrorMessage(ErrorType.DeleteReasonRequired);

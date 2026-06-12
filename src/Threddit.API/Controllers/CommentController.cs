@@ -172,7 +172,13 @@ public sealed class CommentController : ControllerBase
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
-            .ToImmutableArray();
+            .ToImmutableHashSet();
+        
+        var ownedSubThreads = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
 
         var result = await _deleteCommentUseCase.ExecuteAsync(new DeleteCommentRequest(
             commentId,
@@ -180,6 +186,7 @@ public sealed class CommentController : ControllerBase
             isSiteAdmin,
             isSiteOwner,
             moderatedSubThreadIds,
+            ownedSubThreads,
             reason
         ));
 

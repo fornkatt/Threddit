@@ -497,24 +497,6 @@ public class ThredditApiClient
         return Result<int>.Error(error);
     }
 
-    private static async Task<string?> TryReadErrorMessage(HttpResponseMessage response, CancellationToken ct)
-    {
-        var content = await response.Content.ReadAsStringAsync(ct);
-
-        if (string.IsNullOrWhiteSpace(content))
-            return $"Request failed with status {(int)response.StatusCode}.";
-
-        try
-        {
-            var error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content);
-            return error?.Message;
-        }
-        catch
-        {
-            return $"Request failed with status {(int)response.StatusCode}.";
-        }
-    }
-
     /* CONVERSATIONS =========================================================================================== */
     public async Task<Result<GetConversationsApiResponse>> GetConversationsAsync(CancellationToken ct = default)
     {
@@ -669,5 +651,27 @@ public class ThredditApiClient
 
         var error = await TryReadErrorMessage(response, ct);
         return Result<bool>.Error(error);
+    }
+    
+    private static async Task<string?> TryReadErrorMessage(HttpResponseMessage response, CancellationToken ct)
+    {
+        var content = await response.Content.ReadAsStringAsync(ct);
+
+        if (string.IsNullOrWhiteSpace(content))
+            return $"Request failed with status {(int)response.StatusCode}.";
+
+        try
+        {
+            var options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, options);
+            return error?.Message ?? $"Request failed with status {(int)response.StatusCode}.";
+        }
+        catch
+        {
+            return $"Request failed with status {(int)response.StatusCode}.";
+        }
     }
 }

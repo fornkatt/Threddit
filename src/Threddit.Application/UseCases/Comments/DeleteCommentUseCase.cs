@@ -36,16 +36,17 @@ public sealed partial class DeleteCommentUseCase : IDeleteCommentUseCase
 
         var isSitePrivileged = request.IsSiteAdmin || request.IsSiteOwner;
         var isModerator = request.ModeratedSubThreadIds.Contains(comment.SubThreadId);
+        var isSubThreadOwner = request.OwnedSubThreads.Contains(comment.SubThreadId);
         var isAuthor = comment.CommentedById == request.RequestingUserId;
 
-        if (!isSitePrivileged && !isModerator && !isAuthor)
+        if (!isSitePrivileged && !isModerator && !isAuthor && !isSubThreadOwner)
         {
             LogUnauthorizedDeletionAttempt(request.RequestingUserId, request.CommentId);
             var message = ResolveErrorMessage(ErrorType.Forbidden);
             return new DeleteCommentResponse(false, message, ErrorType.Forbidden);
         }
         
-        if (!isAuthor && (isSitePrivileged || isModerator) && string.IsNullOrWhiteSpace(request.Reason))
+        if (!isAuthor && (isSitePrivileged || isModerator || isSubThreadOwner) && string.IsNullOrWhiteSpace(request.Reason))
         {
             LogDeletionFailure(null, request.CommentId,
                 "Reason is required for site admins and moderators.");

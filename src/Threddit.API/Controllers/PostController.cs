@@ -118,7 +118,13 @@ public sealed class PostController : ControllerBase
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
-            .ToImmutableArray();
+            .ToImmutableHashSet();
+        
+        var ownedSubThreads = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
 
         var useCaseRequest = new DeletePostRequest(
             postId,
@@ -126,6 +132,7 @@ public sealed class PostController : ControllerBase
             isSiteAdmin,
             isSiteOwner,
             moderatedSubThreadIds,
+            ownedSubThreads,
             reason
         );
 

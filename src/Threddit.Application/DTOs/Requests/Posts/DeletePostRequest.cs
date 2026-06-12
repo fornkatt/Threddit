@@ -7,6 +7,7 @@ public sealed record DeletePostRequest(
     Guid RequestingUserId,
     bool IsSiteAdmin,
     bool IsSiteOwner,
-    ImmutableArray<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> OwnedSubThreads,
     string? Reason = null
 );

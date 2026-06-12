@@ -59,16 +59,36 @@
 .edit-button:hover, .cancel-edit-button:hover {
   filter: brightness(0.95);
 }
+.edit-button:disabled, .cancel-edit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.edit-button:disabled:hover, .cancel-edit-button:disabled:hover {
+  filter: none;
+}
 
 .confirm-edit-button, .cancel-delete-button, .confirm-report-button {
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.confirm-edit-button:hover, .cancel-delete-button:hover, .confirm-report-button:hover {
+  filter: brightness(0.95);
+}
+.confirm-edit-button:disabled, .cancel-delete-button:disabled, .confirm-report-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.confirm-edit-button:disabled:hover, .cancel-delete-button:disabled:hover, .confirm-report-button:disabled:hover {
+  filter: none;
+}
+.confirm-edit-button, .cancel-delete-button, .confirm-report-button {
+  background-color: #c7e8e5;
 }
 .confirm-edit-button:hover, .cancel-delete-button:hover, .confirm-report-button:hover {
   filter: brightness(0.9);
@@ -86,6 +106,13 @@
 }
 .confirm-delete-button:hover, .delete-button:hover, .cancel-report-button:hover {
   filter: brightness(0.95);
+}
+.confirm-delete-button:disabled, .delete-button:disabled, .cancel-report-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.confirm-delete-button:disabled:hover, .delete-button:disabled:hover, .cancel-report-button:disabled:hover {
+  filter: none;
 }
 .confirm-delete-button, .delete-button, .cancel-report-button {
   background-color: #f5c6cb;
@@ -141,6 +168,13 @@
 }
 .report-button:hover {
   filter: brightness(0.95);
+}
+.report-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.report-button:disabled:hover {
+  filter: none;
 }
 
 .post-details {
@@ -231,11 +265,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.comment-box-submit-button:hover {
+  filter: brightness(0.95);
+}
+.comment-box-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.comment-box-submit-button:disabled:hover {
+  filter: none;
+}
+.comment-box-submit-button {
+  background-color: #c7e8e5;
 }
 .comment-box-submit-button:hover {
   filter: brightness(0.9);

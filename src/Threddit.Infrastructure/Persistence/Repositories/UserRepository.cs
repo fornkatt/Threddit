@@ -81,6 +81,7 @@ public sealed class UserRepository : IUserRepository
                 .Include(u => u.SiteAdmin)
                 .Include(u => u.BannedSiteUser)
                 .Include(u => u.SubThreadModeratorRoles)
+                .Include(u => u.SubThreadOwnerRoles)
                 .Include(u => u.ReceivedSubThreadBans)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 

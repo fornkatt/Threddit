@@ -60,6 +60,9 @@ public sealed class JwtService : IJwtService
 
         claims.AddRange(user.SubThreadModeratorRoles.Select(mod =>
             new Claim("moderator", mod.SubThreadId.ToString())));
+        
+        claims.AddRange(user.SubThreadOwnerRoles.Select(o =>
+            new Claim("subthreadowner", o.SubThreadId.ToString())));
 
         return claims;
     }

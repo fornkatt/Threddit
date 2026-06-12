@@ -37,11 +37,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.add-member-button:hover, .show-members-button:hover {
+  filter: brightness(0.95);
+}
+.add-member-button:disabled, .show-members-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.add-member-button:disabled:hover, .show-members-button:disabled:hover {
+  filter: none;
+}
+.add-member-button, .show-members-button {
+  background-color: #c7e8e5;
 }
 .add-member-button:hover, .show-members-button:hover {
   filter: brightness(0.9);
@@ -59,6 +72,13 @@
 }
 .confirm-add-member-button:hover {
   filter: brightness(0.95);
+}
+.confirm-add-member-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.confirm-add-member-button:disabled:hover {
+  filter: none;
 }
 
 .back-button {
@@ -89,6 +109,13 @@
 }
 .leave-group-button:hover, .remove-member-button:hover {
   filter: brightness(0.95);
+}
+.leave-group-button:disabled, .remove-member-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.leave-group-button:disabled:hover, .remove-member-button:disabled:hover {
+  filter: none;
 }
 .leave-group-button, .remove-member-button {
   background-color: #f5c6cb;
@@ -151,11 +178,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.reply-button:hover {
+  filter: brightness(0.95);
+}
+.reply-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.reply-button:disabled:hover {
+  filter: none;
+}
+.reply-button {
+  background-color: #c7e8e5;
 }
 .reply-button:hover {
   filter: brightness(0.9);
@@ -218,11 +258,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.confirm-send-button:hover {
+  filter: brightness(0.95);
+}
+.confirm-send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.confirm-send-button:disabled:hover {
+  filter: none;
+}
+.confirm-send-button {
+  background-color: #c7e8e5;
 }
 .confirm-send-button:hover {
   filter: brightness(0.9);

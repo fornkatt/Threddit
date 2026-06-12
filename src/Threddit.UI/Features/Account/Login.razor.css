@@ -37,12 +37,28 @@
 }
 
 .login-submit-button {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+.login-submit-button:hover {
+  filter: brightness(0.95);
+}
+.login-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.login-submit-button:disabled:hover {
+  filter: none;
+}
+.login-submit-button {
+  padding: 10px 20px;
+  background-color: #c7e8e5;
   font-size: 1rem;
 }
 .login-submit-button:hover {

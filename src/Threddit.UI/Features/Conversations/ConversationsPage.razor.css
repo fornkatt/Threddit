@@ -8,11 +8,24 @@
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
-  background-color: #c7e8e5;
+  background-color: white;
   color: #535353;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.75rem;
+}
+.create-new-group-button:hover, .confirm-create-group-button:hover {
+  filter: brightness(0.95);
+}
+.create-new-group-button:disabled, .confirm-create-group-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.create-new-group-button:disabled:hover, .confirm-create-group-button:disabled:hover {
+  filter: none;
+}
+.create-new-group-button, .confirm-create-group-button {
+  background-color: #c7e8e5;
 }
 .create-new-group-button:hover, .confirm-create-group-button:hover {
   filter: brightness(0.9);
