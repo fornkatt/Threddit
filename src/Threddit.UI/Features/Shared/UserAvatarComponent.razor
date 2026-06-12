@@ -1,11 +1,13 @@
 @if (!string.IsNullOrWhiteSpace(ProfilePictureUrl))
 {
     <img src="@ProfilePictureUrl" class="user-avatar @CssClass"
-         alt="@Username avatar" @onclick="OnClick"/>
+         alt="@Username avatar" 
+         @onclick="OnClick"/>
 }
 else
 {
-    <div class="user-avatar user-avatar--default @CssClass" @onclick="OnClick">
+    <div class="user-avatar user-avatar--default @CssClass" 
+         @onclick="OnClick">
         @(Username?.Length > 0 ? Username[0].ToString().ToUpper() : "?")
     </div>
 }

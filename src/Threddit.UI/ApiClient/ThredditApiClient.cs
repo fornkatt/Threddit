@@ -643,4 +643,31 @@ public class ThredditApiClient
         var error = await TryReadErrorMessage(response, ct);
         return Result<bool>.Error(error);
     }
+
+    public async Task<Result<bool>> LeaveGroupAsync(
+        Guid groupId,
+        CancellationToken ct = default)
+    {
+        using var response = await _client
+            .DeleteAsync($"api/conversations/groups/{groupId}/members/me", ct);
+        if (response.IsSuccessStatusCode)
+            return Result<bool>.Ok(true);
+
+        var error = await TryReadErrorMessage(response, ct);
+        return Result<bool>.Error(error);
+    }
+
+    public async Task<Result<bool>> RemoveGroupMemberAsync(
+        Guid groupId,
+        Guid targetUserId,
+        CancellationToken ct = default)
+    {
+        using var response = await _client
+            .DeleteAsync($"api/conversations/groups/{groupId}/members/{targetUserId}", ct);
+        if (response.IsSuccessStatusCode)
+            return Result<bool>.Ok(true);
+
+        var error = await TryReadErrorMessage(response, ct);
+        return Result<bool>.Error(error);
+    }
 }

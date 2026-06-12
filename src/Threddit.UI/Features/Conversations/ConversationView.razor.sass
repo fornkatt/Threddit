@@ -18,7 +18,7 @@
   input
     @include design.input-box
 
-.add-member-button
+.add-member-button, .show-members-button
   @include design.comment-button
 
 .confirm-add-member-button
@@ -27,6 +27,37 @@
 .back-button
   @include design.back-button
   
+.leave-group-button, .remove-member-button
+  @include design.delete-button
+  
+.group-info-top
+  display: flex
+  flex-direction: row
+  gap: 1rem
+  align-items: center
+  
+.member-list
+  margin: 0 0 0 1rem
+  padding: 0
+  display: flex
+  flex-direction: column
+  gap: 0.5rem
+  list-style: none
+  width: fit-content
+  
+.member-item
+  display: grid
+  grid-template-columns: auto 1fr auto
+  gap: 1rem
+  align-items: center
+  list-style: none
+  
+  span
+    font-weight: bold
+    
+::deep .member-username
+  @include design.username-link
+
 .sender-info
   display: flex
   flex-direction: row
@@ -54,6 +85,9 @@
 .message-time
   color: design.$default-placeholder-color
   font-size: 0.8rem
+  
+.message-content
+  margin-left: 1rem
   
 .message-reply-text
   margin-bottom: 0.5rem

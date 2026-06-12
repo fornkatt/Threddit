@@ -272,18 +272,68 @@ public sealed class ConversationRepository : IConversationRepository
                 .FirstOrDefaultAsync(g => g.Id == groupConversationId);
             if (group == null)
                 return Result.Error("Group conversation not found", ErrorType.ConversationNotFound);
-            
+
             if (!group.Members.Any(m => m.UserId == requestingUserId && !m.LeftAt.HasValue))
                 return Result.Error("You are not a member of the group", ErrorType.NotAMember);
 
             var newUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == newMemberId);
             if (newUser == null)
                 return Result.Error("User not found", ErrorType.UserNotFound);
-            
+
             var addResult = group.AddMember(newUser);
             if (!addResult.IsSuccess)
                 return Result.Error(addResult.ErrorMessage, addResult.ErrorType);
-            
+
+            await _context.SaveChangesAsync();
+            return Result.Success();
+        }
+        catch (OperationCanceledException ex)
+        {
+            return Result.Error(RepositoryMessageConstants.DatabaseTimeoutErrorMessage, ErrorType.DatabaseTimeout, ex);
+        }
+    }
+
+    public async Task<Result> LeaveGroupAsync(Guid groupConversationId, Guid userId)
+    {
+        try
+        {
+            var group = await _context.GroupConversations
+                .Include(g => g.Members)
+                .FirstOrDefaultAsync(g => g.Id == groupConversationId);
+            if (group is null)
+                return Result.Error("Group conversation not found", ErrorType.ConversationNotFound);
+
+            var leaveResult = group.RemoveMember(userId);
+            if (!leaveResult.IsSuccess)
+                return Result.Error(leaveResult.ErrorMessage, leaveResult.ErrorType);
+
+            await _context.SaveChangesAsync();
+            return Result.Success();
+        }
+        catch (OperationCanceledException ex)
+        {
+            return Result.Error(RepositoryMessageConstants.DatabaseTimeoutErrorMessage, ErrorType.DatabaseTimeout, ex);
+        }
+    }
+
+    public async Task<Result> RemoveMemberFromGroupAsync(Guid groupConversationId, Guid requestingUserId,
+        Guid targetUserId)
+    {
+        try
+        {
+            var group = await _context.GroupConversations
+                .Include(g => g.Members)
+                .FirstOrDefaultAsync(g => g.Id == groupConversationId);
+            if (group is null)
+                return Result.Error("Group conversation not found", ErrorType.ConversationNotFound);
+
+            if (group.CreatedById != requestingUserId)
+                return Result.Error("Only the group creator can remove a member.", ErrorType.Forbidden);
+
+            var removeResult = group.RemoveMember(targetUserId);
+            if (!removeResult.IsSuccess)
+                return Result.Error(removeResult.ErrorMessage, removeResult.ErrorType);
+
             await _context.SaveChangesAsync();
             return Result.Success();
         }

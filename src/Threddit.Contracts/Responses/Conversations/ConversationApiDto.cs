@@ -10,6 +10,7 @@ public sealed record ConversationApiDto(
 public sealed record GroupConversationApiDto(
     Guid Id,
     string Name,
+    Guid? CreatedById,
     IReadOnlyList<GroupMemberApiDto> Members,
     DateTime CreatedAt
 );

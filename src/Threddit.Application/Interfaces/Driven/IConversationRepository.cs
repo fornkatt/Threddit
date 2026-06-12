@@ -31,4 +31,27 @@ public interface IConversationRepository
     Task<Result<DirectMessage>> SendToGroupConversationAsync(Guid groupConversationId, Guid senderId, string content,
         Guid? parentMessageId = null);
     Task<Result> AddMemberToGroupAsync(Guid groupConversationId, Guid requestingUserId, Guid newMemberId);
+    
+    /// <summary>Allows any member of a group to leave the conversation.</summary>
+    /// <remarks>
+    /// Possible error types:
+    /// <list type="bullet">
+    ///     <item><see cref="ErrorType.ConversationNotFound"/></item>
+    ///     <item><see cref="ErrorType.NotAMember"/></item>
+    ///     <item><see cref="ErrorType.DatabaseTimeout"/></item>
+    /// </list>
+    /// </remarks>
+    Task<Result> LeaveGroupAsync(Guid groupConversationId, Guid userId);
+    
+    /// <summary>Allows the creator of a group conversation to remove a member.</summary>
+    /// <remarks>
+    /// Possible error types:
+    /// <list type="bullet">
+    ///     <item><see cref="ErrorType.ConversationNotFound"/></item>
+    ///     <item><see cref="ErrorType.Forbidden"/></item>
+    ///     <item><see cref="ErrorType.NotAMember"/></item>
+    ///     <item><see cref="ErrorType.DatabaseTimeout"/></item>
+    /// </list>
+    /// </remarks>
+    Task<Result> RemoveMemberFromGroupAsync(Guid groupConversationId, Guid requestingUserId, Guid targetUserId);
 }

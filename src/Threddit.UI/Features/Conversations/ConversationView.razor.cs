@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Threddit.Contracts.Requests.Conversations;
 using Threddit.Contracts.Responses.Conversations;
@@ -10,9 +12,11 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
 {
     [Inject] private ThredditApiClient Client { get; set; } = null!;
     [Inject] private NavigationManager Nav { get; set; } = null!;
+    [Inject] private AuthenticationStateProvider AuthStateProvider { get; set; } = null!;
 
     [SupplyParameterFromQuery(Name = "with")]
     public string? PendingUsername { get; set; }
+
     [Parameter] public Guid ConversationId { get; set; } = Guid.Empty;
 
     private List<DirectMessageApiDto> _messages = [];
@@ -27,9 +31,15 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
     private bool _showAddMember;
     private string _addMemberUsername = string.Empty;
     private string? _addMemberErrorMessage;
-    
+
+    private IReadOnlyList<GroupMemberApiDto> _groupMembers = [];
+    private bool _isCreator;
+    private Guid _creatorId;
+    private bool _showMembers;
+    private string? _memberActionErrorMessage;
+
     private bool _isPendingConversation => !string.IsNullOrWhiteSpace(PendingUsername) && ConversationId == Guid.Empty;
-    
+
     protected override async Task OnParametersSetAsync()
     {
         if (_isPendingConversation)
@@ -38,10 +48,10 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
             _isLoading = false;
             return;
         }
-        
+
         _isGroup = Nav.Uri.Contains("/conversations/group");
         _isLoading = true;
-        
+
         var result = _isGroup
             ? await Client.GetGroupMessagesAsync(ConversationId)
             : await Client.GetConversationMessagesAsync(ConversationId);
@@ -52,18 +62,26 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
         if (_isGroup)
         {
             var allResult = await Client.GetConversationsAsync();
-            _groupName = allResult.Value?.GroupConversations
-                .FirstOrDefault(g => g.Id == ConversationId)?.Name;
+            var group = allResult.Value?.GroupConversations
+                .FirstOrDefault(g => g.Id == ConversationId);
+
+            _groupName = group?.Name;
+            _groupMembers = group?.Members.Where(m => !m.HasLeft).ToList() ?? [];
+
+            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+            var currentUserIdString = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (Guid.TryParse(currentUserIdString, out var currentUserId))
+            {
+                _creatorId = group?.CreatedById ?? Guid.Empty;
+                _isCreator = group?.CreatedById == currentUserId;
+            }
         }
-        
+
         _isLoading = false;
     }
 
-    public void Dispose()
-    {
-        _messages = [];
-    }
-    
+    public void Dispose() => _messages = [];
+
     private void NavigateBack() => Nav.NavigateTo("/conversations");
 
     private void SetReply(DirectMessageApiDto message) => _replyTo = message;
@@ -86,6 +104,7 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
                 _isBusy = false;
                 return;
             }
+
             Nav.NavigateTo($"/conversations/{createResult.Value}", replace: true);
             ConversationId = createResult.Value;
             PendingUsername = null;
@@ -99,10 +118,10 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
         if (result.IsSuccess)
         {
             var sent = result.Value!;
-            
+
             if (_replyTo is not null && sent.ParentMessageSenderUsername is null)
                 sent = sent with { ParentMessageSenderUsername = _replyTo.SenderUsername };
-            
+
             _messages.Add(sent);
             _messageContent = string.Empty;
             _replyTo = null;
@@ -117,7 +136,7 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
 
     private async Task OnKeyDown(KeyboardEventArgs e)
     {
-        if (e.Key == "Enter" && !e.ShiftKey)
+        if (e is { Key: "Enter", ShiftKey: false })
             await SendAsync();
     }
 
@@ -153,5 +172,41 @@ public sealed partial class ConversationView : ComponentBase, IDisposable
         }
 
         _isBusy = false;
+    }
+
+    private async Task LeaveGroupAsync()
+    {
+        _memberActionErrorMessage = null;
+        _isBusy = true;
+        StateHasChanged();
+
+        var result = await Client.LeaveGroupAsync(ConversationId);
+        if (result.IsSuccess)
+            Nav.NavigateTo("/conversations");
+        else
+            _memberActionErrorMessage = result.ErrorMessage ?? "Failed to leave group.";
+
+        _isBusy = false;
+    }
+
+    private async Task RemoveMemberAsync(Guid targetMemberId)
+    {
+        _memberActionErrorMessage = null;
+        _isBusy = true;
+        StateHasChanged();
+
+        var result = await Client.RemoveGroupMemberAsync(ConversationId, targetMemberId);
+        if (result.IsSuccess)
+            await OnParametersSetAsync();
+        else
+            _memberActionErrorMessage = result.ErrorMessage ?? "Failed to remove member.";
+
+        _isBusy = false;
+    }
+    
+    private void NavigateToUserProfile(string? username)
+    {
+        if (username is not null)
+            Nav.NavigateTo($"/u/{username}");
     }
 }

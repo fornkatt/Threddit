@@ -50,6 +50,7 @@ public class ConversationController : ControllerBase
         var groupDtos = (groupsResult.Value ?? []).Select(g =>
             new GroupConversationApiDto(
                 g.Id, g.Name,
+                g.CreatedById,
                 g.Members.Select(m =>
                         new GroupMemberApiDto(m.UserId, m.User?.UserName, m.User?.ProfilePicture, m.HasLeft))
                     .ToList(),
@@ -197,6 +198,53 @@ public class ConversationController : ControllerBase
             {
                 ErrorType.AlreadyMember => BadRequest(new ErrorResponse(result.ErrorMessage)),
                 ErrorType.NotAMember => Forbid(),
+                _ => StatusCode(500, new ErrorResponse(result.ErrorMessage))
+            };
+
+        return NoContent();
+    }
+    
+    [HttpDelete("groups/{groupId:guid}/members/me")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> LeaveGroup(
+        [FromRoute] Guid groupId,
+        CancellationToken ct = default)
+    {
+        var userId = CurrentUserId;
+        var result = await _conversationRepository.LeaveGroupAsync(groupId, userId);
+        if (!result.IsSuccess)
+            return result.ErrorType switch
+            {
+                ErrorType.ConversationNotFound => NotFound(new ErrorResponse(result.ErrorMessage)),
+                ErrorType.NotAMember => NotFound(new ErrorResponse(result.ErrorMessage)),
+                _ => StatusCode(500, new ErrorResponse(result.ErrorMessage))
+            };
+
+        return NoContent();
+    }
+    
+    [HttpDelete("groups/{groupId:guid}/members/{targetUserId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> RemoveMember(
+        [FromRoute] Guid groupId,
+        [FromRoute] Guid targetUserId,
+        CancellationToken ct = default)
+    {
+        var userId = CurrentUserId;
+        var result = await _conversationRepository.RemoveMemberFromGroupAsync(groupId, userId, targetUserId);
+        if (!result.IsSuccess)
+            return result.ErrorType switch
+            {
+                ErrorType.ConversationNotFound => NotFound(new ErrorResponse(result.ErrorMessage)),
+                ErrorType.NotAMember => NotFound(new ErrorResponse(result.ErrorMessage)),
+                ErrorType.Forbidden => Forbid(),
                 _ => StatusCode(500, new ErrorResponse(result.ErrorMessage))
             };
 

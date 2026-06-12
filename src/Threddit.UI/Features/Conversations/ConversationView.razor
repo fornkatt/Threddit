@@ -17,12 +17,53 @@
                 @if (_isGroup)
                 {
                     <div class="group-info-container">
-                        <div>
-                            <span>Group conversation: <strong>@_groupName</strong></span>
-                            <button class="add-member-button" @onclick="() => _showAddMember = !_showAddMember">
-                                Add member
+                        <span>Group conversation: <strong>@_groupName</strong></span>
+                        <div class="group-info-top">
+                            <button class="show-members-button" @onclick="() => _showMembers = !_showMembers">
+                                @(_showMembers ? "Hide members" : $"{_groupMembers.Count} members")
                             </button>
+                            @if (_isCreator)
+                            {
+                                <button class="add-member-button" @onclick="() => _showAddMember = !_showAddMember">
+                                    Add member
+                                </button>
+                            }
+                            @if (!_isCreator)
+                            {
+                                <button class="leave-group-button" @onclick="LeaveGroupAsync" disabled="@_isBusy">
+                                    Leave group
+                                </button>
+                            }
                         </div>
+                        @if (_memberActionErrorMessage is not null)
+                        {
+                            <p class="error">@_memberActionErrorMessage</p>
+                        }
+                        @if (_showMembers)
+                        {
+                            <ul class="member-list">
+                                @foreach (var member in _groupMembers)
+                                {
+                                    <li class="member-item">
+                                        <UserAvatarComponent Username="@member.Username"
+                                                             ProfilePictureUrl="@member.ProfilePicture"
+                                                             CssClass="user-avatar--small"
+                                                             OnClick="@(() => NavigateToUserProfile(member.Username))"/>
+                                        <NavLink class="member-username" href="@($"/u/{member.Username}")">
+                                            @(member.Username ?? "[deleted]")
+                                        </NavLink>
+                                        @if (_isCreator && member.UserId.HasValue && member.UserId != _creatorId)
+                                        {
+                                            <button class="remove-member-button"
+                                                    @onclick="() => RemoveMemberAsync(member.UserId.Value)"
+                                                    disabled="@_isBusy">
+                                                Remove
+                                            </button>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        }
                         @if (_showAddMember)
                         {
                             <div class="add-member-form">
@@ -57,15 +98,18 @@
                         <div class="message-container">
                             <div class="sender-info">
                                 <UserAvatarComponent ProfilePictureUrl="@message.SenderProfilePicture"
-                                                     Username="@message.SenderUsername"/>
-                                <strong>@(message.SenderUsername ?? "[deleted]")</strong>
+                                                     Username="@message.SenderUsername"
+                                                     OnClick="@(() => NavigateToUserProfile(message.SenderUsername))"/>
+                                <NavLink class="member-username" href="@($"/u/{message.SenderUsername}")">
+                                    @(message.SenderUsername ?? "[deleted]")
+                                </NavLink>
                                 <span class="message-time">
                                     @message.SentAt.ToLocalTime().ToString("yyyy MMMM dd HH:mm")
                                 </span>
                             </div>
-                            <div class="message-content">
+                            <p class="message-content">
                                 @(message.IsDeleted ? "[deleted]" : message.Content)
-                            </div>
+                            </p>
                             <div class="reply-button-container">
                                 @if (!message.IsDeleted)
                                 {

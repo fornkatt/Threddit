@@ -33,7 +33,7 @@
   color: #989898;
 }
 
-.add-member-button {
+.add-member-button, .show-members-button {
   padding: 8px 15px;
   border-radius: 25px;
   border: none;
@@ -43,7 +43,7 @@
   font-weight: bold;
   font-size: 0.75rem;
 }
-.add-member-button:hover {
+.add-member-button:hover, .show-members-button:hover {
   filter: brightness(0.9);
 }
 
@@ -75,6 +75,57 @@
 .back-button:hover {
   background-color: #d1d1d1;
   cursor: pointer;
+}
+
+.leave-group-button, .remove-member-button {
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: none;
+  background-color: white;
+  color: #535353;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+.leave-group-button:hover, .remove-member-button:hover {
+  filter: brightness(0.95);
+}
+.leave-group-button, .remove-member-button {
+  background-color: #f5c6cb;
+}
+
+.group-info-top {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.member-list {
+  margin: 0 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  width: fit-content;
+}
+
+.member-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  list-style: none;
+}
+.member-item span {
+  font-weight: bold;
+}
+
+::deep .member-username {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
 }
 
 .sender-info {
@@ -119,6 +170,10 @@
 .message-time {
   color: #989898;
   font-size: 0.8rem;
+}
+
+.message-content {
+  margin-left: 1rem;
 }
 
 .message-reply-text {
