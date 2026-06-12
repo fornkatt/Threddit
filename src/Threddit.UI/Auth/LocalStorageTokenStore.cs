@@ -1,5 +1,6 @@
 using Microsoft.JSInterop;
 using Threddit.Contracts.Responses.Auth;
+using Threddit.UI.Interfaces;
 
 namespace Threddit.UI.Auth;
 

@@ -1,6 +1,6 @@
 using Threddit.Contracts.Responses.Auth;
 
-namespace Threddit.UI.Auth;
+namespace Threddit.UI.Interfaces;
 
 public interface ITokenStore
 {

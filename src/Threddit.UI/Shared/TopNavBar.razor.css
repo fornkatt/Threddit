@@ -38,9 +38,6 @@ nav {
   font-size: 30px;
   font-weight: bolder;
 }
-.main-nav-container ::deep a.logo .logo-t {
-  color: #c7e8e5;
-}
 .main-nav-container ::deep a.logo:hover {
   cursor: pointer;
   background-color: transparent;

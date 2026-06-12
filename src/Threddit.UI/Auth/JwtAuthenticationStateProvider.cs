@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Threddit.UI.Interfaces;
 
 namespace Threddit.UI.Auth;
 
