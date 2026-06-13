@@ -80,7 +80,6 @@ public sealed class SubThreadController : ControllerBase
 
         return Ok(new PagedApiResponse<GetSubThreadSearchApiResponse>(
             paged.Items.Select(s => new GetSubThreadSearchApiResponse(
-                s.Id,
                 s.Name,
                 s.SubscriberCount
             )).ToList().AsReadOnly(),

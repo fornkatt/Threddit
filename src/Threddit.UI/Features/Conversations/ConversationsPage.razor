@@ -1,4 +1,5 @@
 @page "/conversations"
+@using Threddit.UI.Features.Shared
 
 <PageTitle>Conversations - Threddit</PageTitle>
 
@@ -46,6 +47,9 @@
                     @foreach (var conversation in _conversations)
                     {
                         <li class="conversation-item" @onclick="() => OpenConversation(conversation.Id, false)">
+                            <UserAvatarComponent Username="@conversation.OtherUsername" 
+                                                 ProfilePictureUrl="@conversation.OtherProfilePicture"
+                                                 CssClass="user-avatar--small"/>
                             <span class="conversation-username">
                                 Conversation with <strong>@(conversation.OtherUsername ?? "[deleted]")</strong>
                             </span>
@@ -68,8 +72,11 @@
                         <li class="conversation-item" @onclick="() => OpenConversation(group.Id, true)">
                             <span class="conversation-name"><strong>@group.Name</strong></span>
                             <span class="conversation-members">
-                            @group.Members.Count(m => !m.HasLeft).ToString() members
-                        </span>
+                                @group.Members.Count(m => !m.HasLeft).ToString() members
+                            </span>
+                            <span class="conversation-date">
+                                @group.CreatedAt.ToLocalTime().ToString("yyyy MMMM dd")
+                            </span>
                         </li>
                     }
                 </ul>
