@@ -383,13 +383,20 @@ public sealed class SubThreadController : ControllerBase
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
-            .ToImmutableArray();
+            .ToImmutableHashSet();
+        
+        var ownedSubThreadIds = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
 
         var result = await _createSubThreadRuleUseCase
             .ExecuteAsync(new CreateSubThreadRuleRequest(
                 subThreadName,
                 userId,
                 moderatedSubThreadIds,
+                ownedSubThreadIds,
                 apiRequest.RuleTitle,
                 apiRequest.RuleContent
             ));
@@ -430,13 +437,20 @@ public sealed class SubThreadController : ControllerBase
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
-            .ToImmutableArray();
-
+            .ToImmutableHashSet();
+        
+        var ownedSubThreadIds = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
+        
         var result = await _editSubThreadRuleUseCase.ExecuteAsync(new EditSubThreadRuleRequest(
             ruleId,
             Guid.Empty,
             userId,
             moderatedSubThreadIds,
+            ownedSubThreadIds,
             apiRequest.RuleTitle,
             apiRequest.RuleContent
         ));
@@ -477,14 +491,21 @@ public sealed class SubThreadController : ControllerBase
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
-            .ToImmutableArray();
+            .ToImmutableHashSet();
+
+        var ownedSubThreadIds = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
 
         var result = await _deleteSubThreadRuleUseCase
             .ExecuteAsync(new DeleteSubThreadRuleRequest(
                 ruleId,
                 Guid.Empty,
                 userId,
-                moderatedSubThreadIds
+                moderatedSubThreadIds,
+                ownedSubThreadIds
             ));
 
         if (!result.IsSuccess)

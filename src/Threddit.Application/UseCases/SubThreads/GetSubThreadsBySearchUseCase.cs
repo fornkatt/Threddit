@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.Extensions.Logging;
 using Threddit.Application.DTOs.Common;
 using Threddit.Application.DTOs.Requests.SubThreads;
@@ -44,7 +45,7 @@ public sealed partial class GetSubThreadsBySearchUseCase : IGetSubThreadsBySearc
                 s.Id,
                 s.Name,
                 s.SubscriberCount
-            )).ToList().AsReadOnly(),
+            )).ToImmutableList(),
             paged.Page,
             paged.PageSize,
             paged.TotalCount

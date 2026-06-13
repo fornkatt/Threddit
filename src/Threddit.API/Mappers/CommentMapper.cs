@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Threddit.Application.DTOs.Common;
 using Threddit.Contracts.Responses.Comments;
 
@@ -5,7 +6,7 @@ namespace Threddit.API.Mappers;
 
 public static class CommentMapper
 {
-    public static IReadOnlyList<GetCommentApiResponse> MapComments(IReadOnlyList<CommentDto> comments) =>
+    public static ImmutableList<GetCommentApiResponse> MapComments(IReadOnlyList<CommentDto> comments) =>
         comments.Select(c => new GetCommentApiResponse(
             c.Id,
             c.CommentedById,
@@ -19,5 +20,5 @@ public static class CommentMapper
             c.IsDeleted,
             MapComments(c.Replies),
             c.HasReplies
-        )).ToList().AsReadOnly();
+        )).ToImmutableList();
 }

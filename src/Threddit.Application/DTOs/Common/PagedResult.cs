@@ -1,7 +1,9 @@
+using System.Collections.Immutable;
+
 namespace Threddit.Application.DTOs.Common;
 
 public sealed record PagedResult<T>(
-    IReadOnlyList<T> Items,
+    ImmutableList<T> Items,
     int Page,
     int PageSize,
     int TotalCount

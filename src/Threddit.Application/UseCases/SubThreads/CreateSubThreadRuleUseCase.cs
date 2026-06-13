@@ -47,7 +47,7 @@ public sealed partial class CreateSubThreadRuleUseCase : ICreateSubThreadRuleUse
         var user = userResult.Value!;
 
         var isModerator = request.ModeratedSubThreadIds.Contains(subThread.Id);
-        var isSubThreadOwner = subThread.SubThreadOwner.UserId == user.Id;
+        var isSubThreadOwner = request.OwnedSubThreadIds.Contains(subThread.Id);
 
         if (!isModerator && !isSubThreadOwner)
         {

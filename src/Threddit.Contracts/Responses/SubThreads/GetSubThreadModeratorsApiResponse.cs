@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace Threddit.Contracts.Responses.SubThreads;
 
 public sealed record GetSubThreadModeratorsApiResponse(

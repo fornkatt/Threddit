@@ -8,6 +8,7 @@ public sealed record SetReportStatusRequest(
     Guid RequestingUserId,
     bool IsSiteAdmin,
     bool IsSiteOwner,
-    ImmutableArray<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> OwnedSubThreadIds,
     Report.ReportStatus NewStatus
 );

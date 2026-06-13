@@ -6,7 +6,7 @@ namespace Threddit.Application.UseCases.Validation;
 
 public sealed class GetValidationLimitsUseCase : IGetValidationLimitsUseCase
 {
-    public GetValidationLimitsResponse Execute() => new GetValidationLimitsResponse(
+    public GetValidationLimitsResponse Execute() => new(
         Post.Limits.MaxTitleLength,
         Post.Limits.MaxSlugLength,
         Post.Limits.MaxContentLength,

@@ -1,5 +1,3 @@
-using Threddit.Contracts.Common;
-
 namespace Threddit.Contracts.Responses.Reports;
 
 public sealed record ReportApiDto(

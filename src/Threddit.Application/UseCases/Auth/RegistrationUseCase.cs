@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Threddit.Application.DTOs.Requests;
 using Threddit.Application.DTOs.Requests.Auth;
-using Threddit.Application.DTOs.Responses;
 using Threddit.Application.DTOs.Responses.Auth;
 using Threddit.Application.Interfaces.Driving;
 using Threddit.Domain.Common;

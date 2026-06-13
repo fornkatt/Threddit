@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace Threddit.Contracts.Responses.Users;
 
 public sealed record GetAllSiteAdminsApiResponse(

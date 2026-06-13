@@ -335,6 +335,7 @@ public class ModerationController : ControllerBase
             true,
             true,
             [],
+            [],
             newStatus
         ));
 
@@ -417,13 +418,20 @@ public class ModerationController : ControllerBase
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
-            .ToImmutableArray();
+            .ToImmutableHashSet();
+
+        var ownedSubThreadIds = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
 
         var result = await _unbanSubThreadUserUseCase.ExecuteAsync(new UnbanSubThreadUserRequest(
             targetUserId,
             subThreadName,
             requestingUserId,
-            moderatedSubThreadIds
+            moderatedSubThreadIds,
+            ownedSubThreadIds
         ));
 
         if (!result.IsSuccess)
@@ -582,14 +590,25 @@ public class ModerationController : ControllerBase
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var isSiteAdmin = User.HasClaim("role", "SiteAdmin");
         var isSiteOwner = User.HasClaim("role", "SiteOwner");
+        
         var moderatedSubThreadIds = User.FindAll("moderator")
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
-            .Where(id => id.HasValue).Select(id => id!.Value).ToImmutableArray();
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
+        
+        var ownedSubThreadIds = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
+        
 
         var result = await _getSubThreadReportsUseCase.ExecuteAsync(new GetSubThreadReportsRequest(
             subThreadName,
             userId,
             moderatedSubThreadIds,
+            ownedSubThreadIds,
             isSiteAdmin,
             isSiteOwner,
             parsedStatus,
@@ -641,9 +660,18 @@ public class ModerationController : ControllerBase
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var isSiteAdmin = User.HasClaim("role", "SiteAdmin");
         var isSiteOwner = User.HasClaim("role", "SiteOwner");
+        
         var moderatedSubThreadIds = User.FindAll("moderator")
             .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
-            .Where(id => id.HasValue).Select(id => id!.Value).ToImmutableArray();
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
+        
+        var ownedSubThreadIds = User.FindAll("subthreadowner")
+            .Select(c => Guid.TryParse(c.Value, out var id) ? id : (Guid?)null)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .ToImmutableHashSet();
 
         var result = await _setReportStatusUseCase.ExecuteAsync(new SetReportStatusRequest(
             reportId,
@@ -651,6 +679,7 @@ public class ModerationController : ControllerBase
             isSiteAdmin,
             isSiteOwner,
             moderatedSubThreadIds,
+            ownedSubThreadIds,
             newStatus
         ));
 

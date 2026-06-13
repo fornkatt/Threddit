@@ -134,9 +134,9 @@
             }
 
             <div class="message-input-area">
-                <InputTextArea class="message-text-input" @bind-Value="_messageContent" @bind:event="oninput"
+                <textarea class="message-text-input" @bind="_messageContent" @bind:event="oninput"
                                placeholder="Message..." maxlength="3000"
-                               @onkeydown="OnKeyDown"/>
+                          @onkeydown="OnKeyDown"></textarea>
                 <button class="confirm-send-button"
                         @onclick="SendAsync" disabled="@(_isBusy || string.IsNullOrWhiteSpace(_messageContent))">
                     Send

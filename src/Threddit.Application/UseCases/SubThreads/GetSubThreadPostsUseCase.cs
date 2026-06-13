@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.Extensions.Logging;
 using Threddit.Application.DTOs.Common;
 using Threddit.Application.DTOs.Requests.SubThreads;
@@ -71,7 +72,7 @@ public sealed partial class GetSubThreadPostsUseCase : IGetSubThreadPostsUseCase
                 p.CommentCount,
                 p.PostedAt,
                 p.UpdatedAt
-                )).ToList().AsReadOnly(),
+                )).ToImmutableList(),
             paged.Page,
             paged.PageSize,
             paged.TotalCount

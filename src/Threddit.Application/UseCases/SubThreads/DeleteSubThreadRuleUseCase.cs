@@ -55,7 +55,7 @@ public sealed partial class DeleteSubThreadRuleUseCase : IDeleteSubThreadRuleUse
         var subThread = subThreadResult.Value!;
         
         var isModerator = request.ModeratedSubThreadIds.Contains(request.SubThreadId);
-        var isSubThreadOwner = subThread.SubThreadOwner.UserId == request.RequestingUserId;
+        var isSubThreadOwner = request.OwnedSubThreadIds.Contains(subThread.Id);
 
         if (!isSubThreadOwner && !isModerator)
         {

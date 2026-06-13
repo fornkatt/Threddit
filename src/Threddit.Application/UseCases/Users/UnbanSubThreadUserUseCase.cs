@@ -37,7 +37,7 @@ public sealed partial class UnbanSubThreadUserUseCase : IUnbanSubThreadUserUseCa
         var subThread = subThreadResult.Value!;
         
         var isModerator = request.ModeratedSubThreadIds.Contains(subThread.Id);
-        var isSubThreadOwner = subThread.SubThreadOwner.UserId == request.RequestingUserId;
+        var isSubThreadOwner = request.OwnedSubThreadIds.Contains(subThread.Id);
 
         if (!isModerator && !isSubThreadOwner)
         {

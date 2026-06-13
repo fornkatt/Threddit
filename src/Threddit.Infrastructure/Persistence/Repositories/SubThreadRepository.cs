@@ -41,7 +41,7 @@ public class SubThreadRepository : ISubThreadRepository
                 .Take(pageSize)
                 .ToListAsync();
 
-            return Result<PagedResult<SubThread>>.Success(new PagedResult<SubThread>(items, page, pageSize,
+            return Result<PagedResult<SubThread>>.Success(new PagedResult<SubThread>([..items], page, pageSize,
                 totalCount));
         }
         catch (OperationCanceledException ex)
@@ -65,7 +65,7 @@ public class SubThreadRepository : ISubThreadRepository
                 .Take(pageSize)
                 .ToListAsync();
 
-            return Result<PagedResult<SubThread>>.Success(new PagedResult<SubThread>(items, page, pageSize,
+            return Result<PagedResult<SubThread>>.Success(new PagedResult<SubThread>([..items], page, pageSize,
                 totalCount));
         }
         catch (OperationCanceledException ex)
@@ -120,7 +120,7 @@ public class SubThreadRepository : ISubThreadRepository
                 .Take(pageSize)
                 .ToListAsync();
 
-            return Result<PagedResult<Post>>.Success(new PagedResult<Post>(items, page, pageSize, totalCount));
+            return Result<PagedResult<Post>>.Success(new PagedResult<Post>([..items], page, pageSize, totalCount));
         }
         catch (OperationCanceledException ex)
         {
@@ -460,11 +460,11 @@ public class SubThreadRepository : ISubThreadRepository
         {
             var subThread = await _context.SubThreads
                 .FirstOrDefaultAsync(st => st.Name == subThreadName);
-            
+
             if (subThread is null)
                 return Result<ImmutableList<SubThreadModerator>>.Error($"SubThread not found with name {subThreadName}",
                     ErrorType.SubThreadNotFound);
-            
+
             var moderators = await _context.SubThreadModerators
                 .Include(m => m.User)
                 .Where(m => m.SubThreadId == subThread.Id)

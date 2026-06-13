@@ -229,7 +229,7 @@
   gap: 1rem;
 }
 
-::deep .message-text-input {
+.message-text-input {
   all: unset;
   box-sizing: border-box !important;
   padding: 10px;
@@ -250,7 +250,7 @@
   word-wrap: break-word;
   overflow-wrap: anywhere;
 }
-::deep .message-text-input::placeholder {
+.message-text-input::placeholder {
   color: #989898;
 }
 

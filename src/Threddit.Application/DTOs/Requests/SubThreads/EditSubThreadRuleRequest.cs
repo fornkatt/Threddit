@@ -6,7 +6,8 @@ public sealed record EditSubThreadRuleRequest(
     Guid RuleId,
     Guid SubThreadId,
     Guid RequestingUserId,
-    ImmutableArray<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> OwnedSubThreadIds,
     string RuleTitle,
     string RuleContent
 );

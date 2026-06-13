@@ -6,5 +6,6 @@ public sealed record UnbanSubThreadUserRequest(
     Guid TargetUserId,
     string SubThreadName,
     Guid RequestingUserId,
-    ImmutableArray<Guid> ModeratedSubThreadIds
+    ImmutableHashSet<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> OwnedSubThreadIds
 );

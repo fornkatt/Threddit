@@ -6,7 +6,8 @@ namespace Threddit.Application.DTOs.Requests.Reports;
 public sealed record GetSubThreadReportsRequest(
     string SubThreadName,
     Guid RequestingUserId,
-    ImmutableArray<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> ModeratedSubThreadIds,
+    ImmutableHashSet<Guid> OwnedSubThreadIds,
     bool IsSiteAdmin,
     bool IsSiteOwner,
     Report.ReportStatus? StatusFilter = null,

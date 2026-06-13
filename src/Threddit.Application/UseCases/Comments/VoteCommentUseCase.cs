@@ -4,7 +4,6 @@ using Threddit.Application.DTOs.Responses.Comments;
 using Threddit.Application.Interfaces.Driven;
 using Threddit.Application.Interfaces.Driving;
 using Threddit.Domain.Common;
-using Threddit.Domain.Entities;
 
 namespace Threddit.Application.UseCases.Comments;
 

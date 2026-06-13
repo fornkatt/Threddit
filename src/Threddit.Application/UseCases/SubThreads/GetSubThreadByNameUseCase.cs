@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.Extensions.Logging;
 using Threddit.Application.DTOs.Common;
 using Threddit.Application.DTOs.Requests.SubThreads;
@@ -49,7 +50,7 @@ public sealed partial class GetSubThreadByNameUseCase : IGetSubThreadByNameUseCa
             subThread.UpdatedAt,
             subThread.SubThreadRules
                 .Select(r => new SubThreadRuleDto(r.Id, r.RuleTitle, r.RuleContent))
-                .ToList()
+                .ToImmutableList()
         );
 
         return new GetSubThreadByNameResponse(true, dto);

@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Threddit.Application.DTOs.Common;
 
 public sealed record CommentDto(
@@ -11,6 +13,6 @@ public sealed record CommentDto(
     DateTime CommentedAt,
     DateTime? UpdatedAt,
     bool IsDeleted,
-    IReadOnlyList<CommentDto> Replies,
+    ImmutableList<CommentDto> Replies,
     bool HasReplies
 );

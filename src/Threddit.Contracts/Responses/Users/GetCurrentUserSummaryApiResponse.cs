@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using Threddit.Contracts.Common;
 
 namespace Threddit.Contracts.Responses.Users;

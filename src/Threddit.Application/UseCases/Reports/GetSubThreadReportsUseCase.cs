@@ -39,10 +39,10 @@ public sealed partial class GetSubThreadReportsUseCase : IGetSubThreadReportsUse
 
         var subThread = subThreadResult.Value!;
         var isModerator = request.ModeratedSubThreadIds.Contains(subThread.Id);
-        var isOwner = subThread.SubThreadOwner.UserId == request.RequestingUserId;
+        var isSubThreadOwner = request.OwnedSubThreadIds.Contains(subThread.Id);
         var isSitePrivileged = request.IsSiteAdmin || request.IsSiteOwner;
 
-        if (!isModerator && !isOwner && !isSitePrivileged)
+        if (!isModerator && !isSubThreadOwner && !isSitePrivileged)
         {
             LogUnauthorizedAccess(request.RequestingUserId, subThread.Id);
             var message = ResolveErrorMessage(ErrorType.Forbidden);

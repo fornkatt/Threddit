@@ -1,5 +1,3 @@
-using Threddit.Contracts.Common;
-
 namespace Threddit.Contracts.Requests.Reports;
 
 /// <summary>

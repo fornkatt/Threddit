@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Threddit.Application.DTOs.Common;
 
 public sealed record SubThreadDto(
@@ -9,5 +11,5 @@ public sealed record SubThreadDto(
     int SubscriberCount,
     DateTime CreatedAt,
     DateTime? UpdatedAt,
-    IReadOnlyList<SubThreadRuleDto> Rules
+    ImmutableList<SubThreadRuleDto> Rules
 );

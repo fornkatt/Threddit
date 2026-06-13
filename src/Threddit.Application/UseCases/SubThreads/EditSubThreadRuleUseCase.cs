@@ -57,7 +57,7 @@ public sealed partial class EditSubThreadRuleUseCase : IEditSubThreadRuleUseCase
         var subThread = subThreadResult.Value!;
         
         var isModerator = request.ModeratedSubThreadIds.Contains(request.SubThreadId);
-        var isSubThreadOwner = subThread.SubThreadOwner.UserId == user.Id;
+        var isSubThreadOwner = request.OwnedSubThreadIds.Contains(subThread.Id);
 
         if (!isSubThreadOwner && !isModerator)
         {
